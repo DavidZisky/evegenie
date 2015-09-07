@@ -38,8 +38,6 @@ class EveGenie(object):
 
     def parse_item(self, endpoint_item):
         item = {'type': self.get_type(endpoint_item)}
-        print(item['type'])
-        print(endpoint_item)
         if item['type'] == 'dict':
             item['schema'] = {}
             for k, i in endpoint_item.iteritems():
