@@ -36,6 +36,14 @@ class EveGenie(object):
         for endpoint in schema_source:
             setattr(self, endpoint, self.parse_endpoint(schema_source[endpoint]))
 
+    def parse_item(self, endpoint_item):
+        item = {'type': self.get_type(endpoint_item)}
+        if item['type'] == 'dict':
+            item['schema'] = {}
+            for k, i in endpoint_item.iteritems():
+                item['schema'][k] = self.parse_item(i)
+        return item
+
     def parse_endpoint(self, endpoint_source):
         """
         Takes the values of an endpoint from its raw json representation and converts it to the eve schema equivalent.
@@ -43,15 +51,9 @@ class EveGenie(object):
         :param endpoint_source: dict of fields in an endpoint
         :return:
         """
-        # @todo make this recursive for nested dicts and dicts within lists
         schema = {}
-        for k, v in endpoint_source.iteritems():
-            item = {'type': self.get_type(v)}
-            if item['type'] == 'dict':
-                item['schema'] = {}
-                for i in v:
-                    item['schema'][i] = {'type': self.get_type(v[i])}
-            schema[k] = item
+        for key, value in endpoint_source.iteritems():
+            schema[key] = self.parse_item(value)
 
         return schema
 
