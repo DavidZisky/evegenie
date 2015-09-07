@@ -3,6 +3,7 @@ EveGenie class for building Eve settings and schemas.
 """
 import json
 import os.path
+import re
 
 from jinja2 import Environment, PackageLoader
 
@@ -10,6 +11,10 @@ from jinja2 import Environment, PackageLoader
 class EveGenie(object):
 
     template_env = Environment(loader=PackageLoader('evegenie', 'templates'))
+    objectidregex = re.compile('^objectid:\s*?(.+)$', flags=re.M)
+    intrangeregex = re.compile('^(\d+)-(\d+)$', flags=re.M)
+    floatrangeregex = re.compile('^([0-9.]+)-([0-9.]+)$', flags=re.M)
+
 
     def __init__(self, data=None, filename=None):
         """
@@ -74,12 +79,28 @@ class EveGenie(object):
                 item['schema'] = self.parse_item(i)
         elif item['type'] == 'objectid':
             # add extra data_relation for objectid types
-            item['data_relation'] = {
-                # 9 from 'objectid:', strip to allow for space after colon
-                'resource': endpoint_item[9:].strip(),
-                'field': '_id',
-                'embeddable': True,
-            }
+            match = self.objectidregex.match(endpoint_item).group(1)
+            if match:
+                item['data_relation'] = {
+                    'resource': match,
+                    'field': '_id',
+                    'embeddable': True,
+                }
+        elif item['type'] == 'integer':
+            # if string, it's really an integer range
+            if isinstance(endpoint_item, basestring):
+                match = self.intrangeregex.match(endpoint_item).group(1, 2)
+                if match:
+                    item['min'] = int(match[0])
+                    item['max'] = int(match[1])
+        elif item['type'] == 'float':
+            # if string, it's really a float range
+            if isinstance(endpoint_item, basestring):
+                match = self.floatrangeregex.match(endpoint_item).group(1, 2)
+                if match:
+                    item['min'] = float(match[0])
+                    item['max'] = float(match[1])
+
 
         return item
 
@@ -109,8 +130,12 @@ class EveGenie(object):
 
         # Evegenie special strings
         if eve_type == 'string':
-            if source[:9] == 'objectid:':
+            if self.objectidregex.match(source):
                 eve_type = 'objectid'
+            elif self.intrangeregex.match(source):
+                eve_type = 'integer'
+            elif self.floatrangeregex.match(source):
+                eve_type = 'float'
 
         return eve_type
 
