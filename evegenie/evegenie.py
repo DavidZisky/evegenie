@@ -104,6 +104,13 @@ class EveGenie(object):
 
         return eve_type
 
+    def format_endpoint(self, endpoint):
+        endpoint = json.dumps(endpoint, indent=4).replace('"', '\'')
+        endpoint = endpoint.replace('true', 'True')
+        endpoint = endpoint.replace('false', 'False')
+
+        return endpoint
+
     def write_file(self, filename):
         """
         Pass schema object to template engine to be rendered for use.
@@ -112,8 +119,11 @@ class EveGenie(object):
         :return:
         """
         template = self.template_env.get_template('settings.py.j2')
+        endpoints = {k: self.format_endpoint(v) for k, v in self.__dict__.iteritems()}
+        endpoints = endpoints
+
         settings = template.render(
-            schema=self.__dict__,
+            endpoints=endpoints,
         )
         with open(filename, 'w') as ofile:
             ofile.write(settings)

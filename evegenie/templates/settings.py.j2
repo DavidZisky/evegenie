@@ -1,39 +1,5 @@
-{% for enpoint, endpont_schema in schema.iteritems() %}
-{{ enpoint }} = {
-    'schema': {
-    {%- for k, v in endpont_schema.iteritems() %}
-        '{{ k }}': {% if 'schema' in v -%}
-            {
-            'type': '{{ v['type'] }}',
-            'schema': {
-            {%- for k2, v2 in v['schema'].iteritems() %}
-                '{{ k2 }}': {% if 'schema' in v2 -%}
-                {
-                    'type': '{{ v2['type'] }}',
-                    'schema': {
-                        {%- for k3, v3 in v2['schema'].iteritems() %}
-                        '{{ k3 }}': {{ v3 }}
-                        {%- endfor %}
-                    }
-                }
-                {%- else -%}
-                    {%- if v2 is mapping -%}
-                        {{ v2 }},
-                    {%- else -%}
-                        '{{ v2 }}',
-                    {%- endif %}
-                {%- endif %}
-
-            {%- endfor %}
-            }
-        }
-        {%- else -%}
-            {{ v }},
-        {%- endif %}
-
-    {%- endfor %}
-    }
-}
+{% for endpoint, endpont_schema in endpoints.iteritems() %}
+{{ endpoint }} = {{ endpont_schema }}
 {% endfor %}
 
 
