@@ -5,6 +5,8 @@
     "alive": true,
     "title": "Champion of Sea Dwellers",
     "inventory": ["map", "apple", "sword", "potion"],
+    "primary_artifact": "objectid:artifact",
+    "secondary_artifacts": ["objectid: artifact", "objectid:artifact"],
     "address": {
       "address": "123 Pacific Ocean",
       "city": "Neptunville",
