@@ -101,22 +101,28 @@ class EveGenie(object):
             raise TypeError('Value types must be in [{0}]'.format(', '.join(type_mapper.values())))
 
         # Evegenie special strings
-        if eve_type == 'string':
-            if source[:9] == 'objectid:':
-                eve_type = 'objectid'
+        if eve_type == 'string' and source[:9] == 'objectid:':
+            eve_type = 'objectid'
 
         return eve_type
 
     def format_endpoint(self, endpoint_schema):
         """
+        Render endpoint schema for readability.  This adds indentation and line breaks.
+
         :param endpoint_schema: dict of eve schema
         :return string of eve schema ready for output
         """
+
         # separators prevents trailing whitespace
         endpoint = json.dumps(endpoint_schema, indent=4, separators=(',',' : '))
-        endpoint.replace('"', '\'') \
-                .replace('true', 'True') \
-                .replace('false', 'False')
+        updates = [
+            ('"', '\''), # replace doubles with singles
+            ('true', 'True'), # convert json booleans to python ones
+            ('false', 'False')
+        ]
+        for needle, sub in updates:
+            endpoint = endpoint.replace(needle, sub)
 
         return endpoint
 
