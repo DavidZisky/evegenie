@@ -12,6 +12,13 @@ class EveGenie(object):
     template_env = Environment(loader=PackageLoader('evegenie', 'templates'))
 
     def __init__(self, data=None, filename=None):
+        """
+        Initialize EveGenie object. Parses input and sets each endpoint from input as an attribute on the EveGenie object.
+
+        :param data: string or dict of the json representation of our schema
+        :param filename: file containing json representation of our schema
+        :return:
+        """
 
         if filename and not data:
             if os.path.isfile(filename):
@@ -30,6 +37,13 @@ class EveGenie(object):
             setattr(self, endpoint, self.parse_endpoint(schema_source[endpoint]))
 
     def parse_endpoint(self, endpoint_source):
+        """
+        Takes the values of an endpoint from its raw json representation and converts it to the eve schema equivalent.
+
+        :param endpoint_source: dict of fields in an endpoint
+        :return:
+        """
+        # @todo make this recursive for nested dicts and dicts within lists
         schema = {}
         for k, v in endpoint_source.iteritems():
             item = {'type': self.get_type(v)}
@@ -42,6 +56,12 @@ class EveGenie(object):
         return schema
 
     def get_type(self, source_type):
+        """
+        Map python value types to Eve schema value types.
+
+        :param source_type: value from source json field
+        :return:
+        """
         if isinstance(source_type, basestring):
             eve_type = 'string'
         elif isinstance(source_type, int):
@@ -58,6 +78,12 @@ class EveGenie(object):
         return eve_type
 
     def write_file(self, filename):
+        """
+        Pass schema object to template engine to be rendered for use.
+
+        :param filename: output filename
+        :return:
+        """
         template = self.template_env.get_template('settings.py.j2')
         settings = template.render(
             schema=self.__dict__,

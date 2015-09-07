@@ -10,6 +10,12 @@ from evegenie import EveGenie
 
 
 def main(filename):
+    """
+    Create an instance of EveGenie from a json file. Then write it to file.
+
+    :param filename: input filename
+    :return:
+    """
     print 'converting contents of {}'.format(filename)
     eg = EveGenie(filename=filename)
     outfile = '{}.settings.py'.format(filename.split('.')[0])
