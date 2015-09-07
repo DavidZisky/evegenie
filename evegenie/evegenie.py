@@ -11,9 +11,12 @@ from jinja2 import Environment, PackageLoader
 class EveGenie(object):
 
     template_env = Environment(loader=PackageLoader('evegenie', 'templates'))
+    # 'objectid:sample-endpoint' or 'objectid: sample-endpoint'
     objectidregex = re.compile('^objectid:\s*?(.+)$', flags=re.M)
-    intrangeregex = re.compile('^(\d+)-(\d+)$', flags=re.M)
-    floatrangeregex = re.compile('^([0-9.]+)-([0-9.]+)$', flags=re.M)
+    # 'int-int' or 'int - int'. eg: '1-10'
+    intrangeregex = re.compile('^(\d+)\s*?-\s*?(\d+)$', flags=re.M)
+    # 'float-float' or 'float - float'. eg: 0.0-1.0
+    floatrangeregex = re.compile('^([0-9.]+)\s*?-\s*?([0-9.]+)$', flags=re.M)
 
 
     def __init__(self, data=None, filename=None):
