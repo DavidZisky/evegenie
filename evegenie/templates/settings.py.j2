@@ -1,0 +1,23 @@
+
+
+{% for enpoint, endpont_schema in schema.iteritems() %}
+{{ enpoint }} = {
+    'schema': {
+    {%- for k, v in endpont_schema.iteritems() %}
+        '{{ k }}': {% if 'schema' in v -%}
+            {
+            'type': '{{ v['type'] }}',
+            'schema': {
+            {%- for k2, v2 in v['schema'].iteritems() %}
+                '{{ k2 }}': {{ v2 }},
+            {%- endfor %}
+            }
+        }
+        {%- else -%}
+            {{ v }},
+        {%- endif %}
+
+    {%- endfor %}
+    }
+}
+{% endfor %}
