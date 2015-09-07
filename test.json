@@ -9,5 +9,15 @@
       "city": "Neptunville",
       "state": "wet"
     }
+  },
+  "artifact": {
+    "name": "Sword of Speed",
+    "cost": 501.01,
+    "color": "red",
+    "stats": {
+      "weight": 200.01,
+      "length": 3.01,
+      "power": 50
+    }
   }
 }

@@ -18,6 +18,16 @@ test_data = {
             'city': 'Neptunville',
             'state': 'wet',
         }
+    },
+    'artifact': {
+        'name': 'Sword of Speed',
+        'cost': 501.01,
+        'color': 'red',
+        'stats': {
+            'weight': 200.01,
+            'length': 3.01,
+            'power': 50,
+        }
     }
 }
 
@@ -42,6 +52,25 @@ test_data_answer = {
                 'city': {'type': 'string'},
                 'state': {'type': 'string'}
             },
+        }
+    },
+    'artifact': {
+        'name': {
+            'type': 'string'
+        },
+        'cost': {
+            'type': 'float'
+        },
+        'color': {
+            'type': 'string'
+        },
+        'stats': {
+            'type': 'dict',
+            'schema': {
+                'weight': {'type': 'float'},
+                'length': {'type': 'float'},
+                'power': {'type': 'integer'},
+            }
         }
     }
 }
@@ -82,7 +111,7 @@ def test_input_file():
 def test_input_both_inputs():
     """
     Make sure when both data types are passed the data is still parsed as expected.
-    
+
     :return:
     """
     eg = EveGenie(data=test_data, filename='test.json')
