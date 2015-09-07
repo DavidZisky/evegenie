@@ -16,15 +16,15 @@ A tool for making Eve schema generation easier.
 
 ### In code
 
-
-    from evegenie import EveGenie
-    eg = EveGenie(filename='test.json')
-    # Or
-    with open('test.json', 'r') as ifile:
-        data = ifile.read()
-    eg = EveGenie(data=data)
-    eg.write_file('mytest.settings.py')
-
+```python
+from evegenie import EveGenie
+eg = EveGenie(filename='test.json')
+# Or
+with open('test.json', 'r') as ifile:
+    data = ifile.read()
+eg = EveGenie(data=data)
+eg.write_file('mytest.settings.py')
+```
 
     cat mytest.settings.py
 
