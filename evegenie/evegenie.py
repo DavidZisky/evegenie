@@ -80,7 +80,7 @@ class EveGenie(object):
         """
         Map python value types to Eve schema value types.
 
-        :param source_type: value from source json field
+        :param source: value from source json field
         :return:
         """
         type_mapper = {
