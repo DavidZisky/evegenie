@@ -1,0 +1,52 @@
+{
+  "testentity": {
+    "array1": [1, 2, 3],
+    "array2": ["a", "b", "c"],
+    "boolean": true,
+    "number": 123,
+    "object": {
+      "a": "b",
+      "c": "d",
+      "e": "f"
+    },
+    "string": "Hello World",
+    "embedded1": {
+      "array1": [1, 2, 3],
+      "array2": ["a", "b", "c"],
+      "boolean": true,
+      "number": 123,
+      "object": {
+        "array1": [1, 2, 3],
+        "array2": ["a", "b", "c"],
+        "boolean": true,
+        "number": 123,
+        "object": {
+          "a": "b",
+          "c": "d",
+          "e": "f"
+        },
+        "string": "Hello World"
+      }
+    },
+    "embedded2": [
+      {
+        "array1": [1, 2, 3],
+        "array2": ["a", "b", "c"],
+        "boolean": true,
+        "number": 123,
+        "object": {
+          "array1": [1, 2, 3],
+          "array2": ["a", "b", "c"],
+          "boolean": true,
+          "number": 123,
+          "object": {
+            "a": "b",
+            "c": "d",
+            "e": "f"
+          },
+          "string": "Hello World"
+        }
+      }
+    ]
+  }
+}
