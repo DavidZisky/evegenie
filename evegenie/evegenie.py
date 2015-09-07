@@ -13,7 +13,8 @@ class EveGenie(object):
 
     def __init__(self, data=None, filename=None):
         """
-        Initialize EveGenie object. Parses input and sets each endpoint from input as an attribute on the EveGenie object.
+        Initialize EveGenie object. Parses input and sets each endpoint from
+        input as an attribute on the EveGenie object.
 
         :param data: string or dict of the json representation of our schema
         :param filename: file containing json representation of our schema
@@ -32,28 +33,47 @@ class EveGenie(object):
         if isinstance(data, basestring):
             data = json.loads(data)
 
-        schema_source = data
-        for endpoint in schema_source:
-            setattr(self, endpoint, self.parse_endpoint(schema_source[endpoint]))
+        source = data
+        for endpoint in source:
+            setattr(self, endpoint, self.parse_endpoint(source[endpoint]))
+
+
+    def parse_endpoint(self, endpoint_source):
+        """
+        Takes the values of an endpoint from its raw json representation and
+        converts it to the eve schema equivalent.
+
+        :param endpoint_source: dict of fields in an endpoint
+        :return: dict representing eve schema for the endpoint
+        """
+        schema = {}
+        for key, value in endpoint_source.iteritems():
+            schema[key] = self.parse_item(value)
+
+        return schema
+
 
     def parse_item(self, endpoint_item):
         """
         Recursivily takes the values of an endpoint's field from its raw
         json and convets it to the eve schema equivalent of that field.
 
-        : param endpoint_item: dict of field
-        : return: dict representing eve schema for field
+        :param endpoint_item: dict of field within an endpoint
+        :return: dict representing eve schema for field
         """
         item = {'type': self.get_type(endpoint_item)}
         if item['type'] == 'dict':
+            # recursively parse each item in a dict and add to item schema
             item['schema'] = {}
             for k, i in endpoint_item.iteritems():
                 item['schema'][k] = self.parse_item(i)
-        if item['type'] == 'list':
+        elif item['type'] == 'list':
+            # recursively parse each item in a list and add to item schema
             item['schema'] = {}
             for i in endpoint_item:
                 item['schema'] = self.parse_item(i)
-        if item['type'] == 'objectid':
+        elif item['type'] == 'objectid':
+            # add extra data_relation for objectid types
             item['data_relation'] = {
                 # 9 from 'objectid:', strip to allow for space after colon
                 'resource': endpoint_item[9:].strip(),
@@ -63,25 +83,13 @@ class EveGenie(object):
 
         return item
 
-    def parse_endpoint(self, endpoint_source):
-        """
-        Takes the values of an endpoint from its raw json representation and converts it to the eve schema equivalent.
-
-        :param endpoint_source: dict of fields in an endpoint
-        :return:
-        """
-        schema = {}
-        for key, value in endpoint_source.iteritems():
-            schema[key] = self.parse_item(value)
-
-        return schema
 
     def get_type(self, source):
         """
         Map python value types to Eve schema value types.
 
         :param source: value from source json field
-        :return:
+        :return: eve schema type representing source type
         """
         type_mapper = {
             unicode: 'string',
@@ -97,7 +105,7 @@ class EveGenie(object):
         if source_type in type_mapper:
             eve_type = type_mapper[source_type]
         else:
-            raise TypeError('Value types must be bool, int, float, dist, list, basestring, unicode')
+            raise TypeError('Value types must be unicode, str, bool, int, float, dict, or list')
 
         # Evegenie special strings
         if eve_type == 'string':
@@ -106,12 +114,18 @@ class EveGenie(object):
 
         return eve_type
 
-    def format_endpoint(self, endpoint):
-        endpoint = json.dumps(endpoint, indent=4).replace('"', '\'')
+
+    def format_endpoint(self, endpoint_schema):
+        """
+        :param endpoint_schema: dict of eve schema
+        :return string of eve schema ready for output
+        """
+        endpoint = json.dumps(endpoint_schema, indent=4).replace('"', '\'')
         endpoint = endpoint.replace('true', 'True')
         endpoint = endpoint.replace('false', 'False')
 
         return endpoint
+
 
     def write_file(self, filename):
         """
@@ -121,14 +135,16 @@ class EveGenie(object):
         :return:
         """
         template = self.template_env.get_template('settings.py.j2')
-        endpoints = {k: self.format_endpoint(v) for k, v in self.__dict__.iteritems()}
-        endpoints = endpoints
 
         settings = template.render(
-            endpoints=endpoints,
+            endpoints = {
+                endpoint: self.format_endpoint(endpoint_schema) \
+                    for endpoint, endpoint_schema in self.__dict__.iteritems()
+            }
         )
         with open(filename, 'w') as ofile:
             ofile.write(settings)
+
 
     def __str__(self):
         return json.dumps(self.__dict__)
