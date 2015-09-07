@@ -42,7 +42,7 @@ test_data = {
 
 if not os.path.isfile('test.json'):
     with open('test.json', 'w') as ofile:
-        ofile.write(json.dumps(test_data, indent=4))
+        ofile.write(json.dumps(test_data, indent=4, separators=(',',' : ')))
 
 test_data_answer = {
     'user': {
@@ -177,7 +177,7 @@ def test_input_both_inputs():
 def test_simple_endpoint_validation():
     """
     Test that the endpoint schema generated will validate when used in Eve.
-    
+
     :return:
     """
     eg = EveGenie(data=simple_test_data)
