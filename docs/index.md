@@ -24,6 +24,7 @@ with open('test.json', 'r') as ifile:
     data = ifile.read()
 eg = EveGenie(data=data)
 eg.write_file('mytest.settings.py')
+
 ```
 
     cat mytest.settings.py
