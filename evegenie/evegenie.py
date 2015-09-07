@@ -44,11 +44,8 @@ class EveGenie(object):
         :param endpoint_source: dict of fields in an endpoint
         :return: dict representing eve schema for the endpoint
         """
-        schema = {}
-        for key, value in endpoint_source.iteritems():
-            schema[key] = self.parse_item(value)
 
-        return schema
+        return {k: self.parse_item(v) for k, v in endpoint_source.iteritems()}
 
     def parse_item(self, endpoint_item):
         """
