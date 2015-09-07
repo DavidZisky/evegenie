@@ -5,6 +5,7 @@ Tests for geneve tool.
 
 import json
 import os.path
+from eve.io.mongo import Validator
 from evegenie import EveGenie
 
 
@@ -119,6 +120,17 @@ test_data_answer = {
     }
 }
 
+simple_test_data = {
+    'user': {
+        'name': 'Turtle Man',
+        'age': 71,
+        'alive': True,
+        'title': 'Champion of Sea Dwellers',
+    },
+}
+
+
+
 test_data_answer_string = json.dumps(test_data_answer)
 
 
@@ -160,3 +172,16 @@ def test_input_both_inputs():
     """
     eg = EveGenie(data=test_data, filename='test.json')
     assert(json.loads(str(eg)) == test_data_answer)
+
+
+def test_simple_endpoint_validation():
+    """
+    Test that the endpoint schema generated will validate when used in Eve.
+    
+    :return:
+    """
+    eg = EveGenie(data=simple_test_data)
+    data = json.loads(str(eg))
+    for endpoint in data:
+        v = Validator(data[endpoint])
+        assert(v.validate(simple_test_data[endpoint]))
