@@ -7,7 +7,18 @@
             'type': '{{ v['type'] }}',
             'schema': {
             {%- for k2, v2 in v['schema'].iteritems() %}
-                '{{ k2 }}': {{ v2 }},
+                '{{ k2 }}': {% if 'schema' in v2 -%}
+                {
+                    'type': '{{ v2['type'] }}',
+                    'schema': {
+                        {%- for k3, v3 in v2['schema'].iteritems() %}
+                        '{{ k3 }}': {{ v3 }}
+                        {%- endfor %}
+                    }
+                {%- else -%}
+                    {{ v2 }},
+                {%- endif %}
+
             {%- endfor %}
             }
         }

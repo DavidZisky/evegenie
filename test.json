@@ -20,7 +20,11 @@
     "stats": {
       "weight": 200.01,
       "length": 3.01,
-      "power": 50
+      "powers": {
+          "strike": 1,
+          "deflect": 1,
+          "speed": 3
+      }
     }
   }
 }

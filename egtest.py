@@ -29,7 +29,11 @@ test_data = {
         'stats': {
             'weight': 200.01,
             'length': 3.01,
-            'power': 50,
+            'powers': {
+                'strike': 1,
+                'deflect': 1,
+                'speed': 3,
+            },
         }
     }
 }
@@ -49,7 +53,10 @@ test_data_answer = {
             'type': 'string'
         },
         'inventory': {
-            'type': 'list'
+            'type': 'list',
+            'schema': {
+                'type': 'string'
+            }
         },
         'primary_artifact': {
             'type': 'objectid',
@@ -94,7 +101,14 @@ test_data_answer = {
             'schema': {
                 'weight': {'type': 'float'},
                 'length': {'type': 'float'},
-                'power': {'type': 'integer'},
+                'powers': {
+                    'type': 'dict',
+                    'schema': {
+                        'strike': {'type': 'integer'},
+                        'deflect': {'type': 'integer'},
+                        'speed': {'type': 'integer'},
+                    }
+                },
             }
         }
     }
