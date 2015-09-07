@@ -80,7 +80,8 @@ class EveGenie(object):
             eve_type = 'dict'
         elif isinstance(source_type, list):
             eve_type = 'list'
-
+        else:
+            raise TypeError('Value types must be bool, int, float, dist, list, string')
 
         return eve_type
 
