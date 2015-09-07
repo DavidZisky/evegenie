@@ -2,6 +2,7 @@
   "user": {
     "name": "Turtle Man",
     "age": 71,
+    "alive": true,
     "title": "Champion of Sea Dwellers",
     "inventory": ["map", "apple", "sword", "potion"],
     "address": {

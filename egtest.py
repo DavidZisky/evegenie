@@ -11,6 +11,7 @@ test_data = {
     'user': {
         'name': 'Turtle Man',
         'age': 71,
+        'alive': True,
         'title': 'Champion of Sea Dwellers',
         'inventory': ['map', 'apple', 'sword', 'potion'],
         'address': {
@@ -38,6 +39,9 @@ test_data_answer = {
         },
         'age': {
             'type': 'integer',
+        },
+        'alive': {
+            'type': 'boolean'
         },
         'title': {
             'type': 'string'
