@@ -34,10 +34,7 @@ class EveGenie(object):
         if isinstance(data, basestring):
             data = json.loads(data)
 
-        print data
-        from pprint import pprint
         self.endpoints = {k: self.parse_endpoint(v) for k, v in data.iteritems()}
-        pprint(self.endpoints)
 
     def parse_endpoint(self, endpoint_source):
         """
