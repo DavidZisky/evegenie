@@ -37,6 +37,13 @@ class EveGenie(object):
             setattr(self, endpoint, self.parse_endpoint(schema_source[endpoint]))
 
     def parse_item(self, endpoint_item):
+        """
+        Recursivily takes the values of an endpoint's field from its raw
+        json and convets it to the eve schema equivalent of that field.
+
+        : param endpoint_item: dict of field
+        : return: dict representing eve schema for field
+        """
         item = {'type': self.get_type(endpoint_item)}
         if item['type'] == 'dict':
             item['schema'] = {}
@@ -46,6 +53,14 @@ class EveGenie(object):
             item['schema'] = {}
             for i in endpoint_item:
                 item['schema'] = self.parse_item(i)
+        if item['type'] == 'objectid':
+            item['data_relation'] = {
+                # 9 from 'objectid:', strip to allow for space after colon
+                'resource': endpoint_item[9:].strip(),
+                'field': '_id',
+                'embeddable': True,
+            }
+
         return item
 
     def parse_endpoint(self, endpoint_source):
@@ -69,7 +84,11 @@ class EveGenie(object):
         :return:
         """
         if isinstance(source_type, basestring):
-            eve_type = 'string'
+            # Special evegenie string type objectid
+            if source_type[:9] == 'objectid:':
+                eve_type = 'objectid'
+            else:
+                eve_type = 'string'
         elif isinstance(source_type, bool):
             eve_type = 'boolean'
         elif isinstance(source_type, int):
