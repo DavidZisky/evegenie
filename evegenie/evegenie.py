@@ -3,6 +3,7 @@ EveGenie class for building Eve settings and schemas.
 """
 import json
 import os.path
+import re
 
 from jinja2 import Environment, PackageLoader
 
@@ -120,9 +121,11 @@ class EveGenie(object):
         :param endpoint_schema: dict of eve schema
         :return string of eve schema ready for output
         """
-        endpoint = json.dumps(endpoint_schema, indent=4).replace('"', '\'')
-        endpoint = endpoint.replace('true', 'True')
-        endpoint = endpoint.replace('false', 'False')
+        # separators prevents trailing whitespace
+        endpoint = json.dumps(endpoint_schema, indent=4, separators=(',',' : '))
+        endpoint.replace('"', '\'') \
+                .replace('true', 'True') \
+                .replace('false', 'False')
 
         return endpoint
 
