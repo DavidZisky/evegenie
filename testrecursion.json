@@ -9,6 +9,7 @@
       "c": "d",
       "e": "f"
     },
+    "objectid": "objectid:testentity2",
     "string": "Hello World",
     "embedded1": {
       "array1": [1, 2, 3],
@@ -25,6 +26,7 @@
           "c": "d",
           "e": "f"
         },
+        "objectid": "objectid:testentity2",
         "string": "Hello World"
       }
     },
@@ -44,6 +46,7 @@
             "c": "d",
             "e": "f"
           },
+          "objectid": "objectid:testentity2",
           "string": "Hello World"
         }
       }

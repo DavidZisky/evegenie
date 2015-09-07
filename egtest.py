@@ -14,6 +14,8 @@ test_data = {
         'alive': True,
         'title': 'Champion of Sea Dwellers',
         'inventory': ['map', 'apple', 'sword', 'potion'],
+        'primary_artifact': 'objectid:artifact',
+        'secondary_artifacts': ['objectid: artifact', 'objectid:artifact'],
         'address': {
             'address': '123 Pacific Ocean',
             'city': 'Neptunville',
@@ -55,6 +57,25 @@ test_data_answer = {
             'schema': {
                 'type': 'string'
             }
+        },
+        'primary_artifact': {
+            'type': 'objectid',
+            'data_relation': {
+                'resource': 'artifact',
+                'field': '_id',
+                'embeddable': True,
+            },
+        },
+        'secondary_artifacts': {
+            'type': 'list',
+            'schema': {
+                'type': 'objectid',
+                'data_relation': {
+                    'resource': 'artifact',
+                    'field': '_id',
+                    'embeddable': True,
+                },
+            },
         },
         'address': {
             'type': 'dict',
