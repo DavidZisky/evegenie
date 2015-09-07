@@ -76,31 +76,33 @@ class EveGenie(object):
 
         return schema
 
-    def get_type(self, source_type):
+    def get_type(self, source):
         """
         Map python value types to Eve schema value types.
 
         :param source_type: value from source json field
         :return:
         """
-        if isinstance(source_type, basestring):
-            # Special evegenie string type objectid
-            if source_type[:9] == 'objectid:':
-                eve_type = 'objectid'
-            else:
-                eve_type = 'string'
-        elif isinstance(source_type, bool):
-            eve_type = 'boolean'
-        elif isinstance(source_type, int):
-            eve_type = 'integer'
-        elif isinstance(source_type, float):
-            eve_type = 'float' # this could also be 'number'
-        elif isinstance(source_type, dict):
-            eve_type = 'dict'
-        elif isinstance(source_type, list):
-            eve_type = 'list'
+        type_mapper = {
+            unicode: 'string',
+            basestring: 'string',
+            bool: 'boolean',
+            int: 'integer',
+            float: 'float',
+            dict: 'dict',
+            list: 'list',
+        }
+        source_type = type(source)
+
+        if source_type in type_mapper:
+            eve_type = type_mapper[source_type]
         else:
-            raise TypeError('Value types must be bool, int, float, dist, list, string')
+            raise TypeError('Value types must be bool, int, float, dist, list, basestring, unicode')
+
+        # Evegenie special strings
+        if eve_type == 'string':
+            if source[:9] == 'objectid:':
+                eve_type = 'objectid'
 
         return eve_type
 
