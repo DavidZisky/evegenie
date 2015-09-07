@@ -4,6 +4,7 @@ Tests for geneve tool.
 """
 
 import json
+import os.path
 from evegenie import EveGenie
 
 
@@ -37,6 +38,10 @@ test_data = {
         }
     }
 }
+
+if not os.path.isfile('test.json'):
+    with open('test.json', 'w') as ofile:
+        ofile.write(json.dumps(test_data, indent=4))
 
 test_data_answer = {
     'user': {
