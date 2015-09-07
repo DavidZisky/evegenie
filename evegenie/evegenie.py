@@ -20,6 +20,7 @@ class EveGenie(object):
         :param filename: file containing json representation of our schema
         :return:
         """
+        self.endpoints = {}
 
         if filename and not data:
             if os.path.isfile(filename):
@@ -33,9 +34,10 @@ class EveGenie(object):
         if isinstance(data, basestring):
             data = json.loads(data)
 
-        source = data
-        for endpoint in source:
-            setattr(self, endpoint, self.parse_endpoint(source[endpoint]))
+        print data
+        from pprint import pprint
+        self.endpoints = {k: self.parse_endpoint(v) for k, v in data.iteritems()}
+        pprint(self.endpoints)
 
     def parse_endpoint(self, endpoint_source):
         """
@@ -111,7 +113,6 @@ class EveGenie(object):
 
         return eve_type
 
-
     def format_endpoint(self, endpoint_schema):
         """
         :param endpoint_schema: dict of eve schema
@@ -135,13 +136,12 @@ class EveGenie(object):
         template = self.template_env.get_template('settings.py.j2')
 
         settings = template.render(
-            endpoints = {
-                endpoint: self.format_endpoint(endpoint_schema) \
-                    for endpoint, endpoint_schema in self.__dict__.iteritems()
+            endpoints={
+                endpoint: self.format_endpoint(schema) for endpoint, schema in self.endpoints.iteritems()
             }
         )
         with open(filename, 'w') as ofile:
             ofile.write(settings)
 
     def __str__(self):
-        return json.dumps(self.__dict__)
+        return json.dumps(self.endpoints)
