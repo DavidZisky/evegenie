@@ -115,7 +115,7 @@ class EveGenie(object):
         """
 
         # separators prevents trailing whitespace
-        endpoint = json.dumps(endpoint_schema, indent=4, separators=(',',' : '))
+        endpoint = json.dumps(endpoint_schema, indent=4, separators=(',', ' : '))
         updates = [
             ('"', '\''), # replace doubles with singles
             ('true', 'True'), # convert json booleans to python ones
@@ -143,5 +143,15 @@ class EveGenie(object):
         with open(filename, 'w') as ofile:
             ofile.write(settings)
 
-    def __str__(self):
+    def __iter__(self):
+       for k, v in self.endpoints.iteritems():
+          yield k, v
+
+    def __repr__(self):
         return json.dumps(self.endpoints)
+
+    def __str__(self):
+        return json.dumps(self.endpoints, indent=4, separators=(',', ' : '))
+
+    def __sizeof__(self):
+        return len(self.endpoints)
