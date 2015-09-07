@@ -72,6 +72,8 @@ class EveGenie(object):
         """
         if isinstance(source_type, basestring):
             eve_type = 'string'
+        elif isinstance(source_type, bool):
+            eve_type = 'boolean'
         elif isinstance(source_type, int):
             eve_type = 'integer'
         elif isinstance(source_type, float):
@@ -80,8 +82,7 @@ class EveGenie(object):
             eve_type = 'dict'
         elif isinstance(source_type, list):
             eve_type = 'list'
-        elif isinstance(source_type, bool):
-            eve_type = 'boolean'
+
 
         return eve_type
 
