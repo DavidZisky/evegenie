@@ -98,7 +98,7 @@ class EveGenie(object):
         if source_type in type_mapper:
             eve_type = type_mapper[source_type]
         else:
-            raise TypeError('Value types must be unicode, str, bool, int, float, dict, or list')
+            raise TypeError('Value types must be in [{0}]'.format(', '.join(type_mapper.values())))
 
         # Evegenie special strings
         if eve_type == 'string':
