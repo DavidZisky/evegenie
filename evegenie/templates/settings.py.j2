@@ -9,7 +9,7 @@ eve_settings = {
     'RESOURCE_METHODS': ['GET', 'POST', 'DELETE'],
     'BANDWIDTH_SAVER': False,
     'DOMAIN': {
-        {%- for k in schema %}
+        {%- for k in endpoints %}
         '{{ k }}': {{ k }},
         {%- endfor %}
     },

@@ -25,6 +25,7 @@ class EveGenie(object):
         :param filename: file containing json representation of our schema
         :return:
         """
+        self.endpoints = {}
 
         if filename and not data:
             if os.path.isfile(filename):
@@ -38,10 +39,7 @@ class EveGenie(object):
         if isinstance(data, basestring):
             data = json.loads(data)
 
-        source = data
-        for endpoint in source:
-            setattr(self, endpoint, self.parse_endpoint(source[endpoint]))
-
+        self.endpoints = {k: self.parse_endpoint(v) for k, v in data.iteritems()}
 
     def parse_endpoint(self, endpoint_source):
         """
@@ -51,12 +49,8 @@ class EveGenie(object):
         :param endpoint_source: dict of fields in an endpoint
         :return: dict representing eve schema for the endpoint
         """
-        schema = {}
-        for key, value in endpoint_source.iteritems():
-            schema[key] = self.parse_item(value)
 
-        return schema
-
+        return {k: self.parse_item(v) for k, v in endpoint_source.iteritems()}
 
     def parse_item(self, endpoint_item):
         """
@@ -104,7 +98,6 @@ class EveGenie(object):
 
         return item
 
-
     def get_type(self, source):
         """
         Map python value types to Eve schema value types.
@@ -126,7 +119,7 @@ class EveGenie(object):
         if source_type in type_mapper:
             eve_type = type_mapper[source_type]
         else:
-            raise TypeError('Value types must be unicode, str, bool, int, float, dict, or list')
+            raise TypeError('Value types must be in [{0}]'.format(', '.join(type_mapper.values())))
 
         # Evegenie special strings
         if eve_type == 'string':
@@ -139,20 +132,25 @@ class EveGenie(object):
 
         return eve_type
 
-
     def format_endpoint(self, endpoint_schema):
         """
+        Render endpoint schema for readability.  This adds indentation and line breaks.
+
         :param endpoint_schema: dict of eve schema
         :return string of eve schema ready for output
         """
+
         # separators prevents trailing whitespace
-        endpoint = json.dumps(endpoint_schema, indent=4, separators=(',',' : '))
-        endpoint.replace('"', '\'') \
-                .replace('true', 'True') \
-                .replace('false', 'False')
+        endpoint = json.dumps(endpoint_schema, indent=4, separators=(',', ' : '))
+        updates = [
+            ('"', '\''), # replace doubles with singles
+            ('true', 'True'), # convert json booleans to python ones
+            ('false', 'False')
+        ]
+        for needle, sub in updates:
+            endpoint = endpoint.replace(needle, sub)
 
         return endpoint
-
 
     def write_file(self, filename):
         """
@@ -164,14 +162,22 @@ class EveGenie(object):
         template = self.template_env.get_template('settings.py.j2')
 
         settings = template.render(
-            endpoints = {
-                endpoint: self.format_endpoint(endpoint_schema) \
-                    for endpoint, endpoint_schema in self.__dict__.iteritems()
+            endpoints={
+                endpoint: self.format_endpoint(schema) for endpoint, schema in self.endpoints.iteritems()
             }
         )
         with open(filename, 'w') as ofile:
             ofile.write(settings)
 
+    def __iter__(self):
+       for k, v in self.endpoints.iteritems():
+          yield k, v
+
+    def __repr__(self):
+        return json.dumps(self.endpoints)
 
     def __str__(self):
-        return json.dumps(self.__dict__)
+        return json.dumps(self.endpoints, indent=4, separators=(',', ' : '))
+
+    def __sizeof__(self):
+        return len(self.endpoints)
