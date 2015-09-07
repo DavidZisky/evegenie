@@ -37,7 +37,6 @@ class EveGenie(object):
         for endpoint in source:
             setattr(self, endpoint, self.parse_endpoint(source[endpoint]))
 
-
     def parse_endpoint(self, endpoint_source):
         """
         Takes the values of an endpoint from its raw json representation and
@@ -51,7 +50,6 @@ class EveGenie(object):
             schema[key] = self.parse_item(value)
 
         return schema
-
 
     def parse_item(self, endpoint_item):
         """
@@ -82,7 +80,6 @@ class EveGenie(object):
             }
 
         return item
-
 
     def get_type(self, source):
         """
@@ -128,7 +125,6 @@ class EveGenie(object):
 
         return endpoint
 
-
     def write_file(self, filename):
         """
         Pass schema object to template engine to be rendered for use.
@@ -146,7 +142,6 @@ class EveGenie(object):
         )
         with open(filename, 'w') as ofile:
             ofile.write(settings)
-
 
     def __str__(self):
         return json.dumps(self.__dict__)
