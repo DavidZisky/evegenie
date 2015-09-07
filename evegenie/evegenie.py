@@ -85,7 +85,7 @@ class EveGenie(object):
         """
         type_mapper = {
             unicode: 'string',
-            basestring: 'string',
+            str: 'string',
             bool: 'boolean',
             int: 'integer',
             float: 'float',
