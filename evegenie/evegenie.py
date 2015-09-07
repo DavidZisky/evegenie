@@ -3,7 +3,6 @@ EveGenie class for building Eve settings and schemas.
 """
 import json
 import os.path
-import re
 
 from jinja2 import Environment, PackageLoader
 
