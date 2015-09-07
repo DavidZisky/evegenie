@@ -2,6 +2,8 @@
 
 A tool for making Eve schema generation easier.
 
+**Use case**: You need to stand up an api quickly. You know what your data looks like in JSON but don't yet know the syntax for Eve/Cerberus.
+
 ## Requirements
 
     sudo pip install -r requirements.txt
@@ -17,6 +19,10 @@ A tool for making Eve schema generation easier.
 ```py
 from evegenie import EveGenie
 eg = EveGenie(filename='test.json')
+# Or
+with open('test.json', 'r') as ifile:
+    data = ifile.read()
+eg = EveGenie(data=data)
 eg.write_file('mytest.settings.py')
 ```
 
