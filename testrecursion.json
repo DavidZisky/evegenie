@@ -1,5 +1,7 @@
 {
   "testentity": {
+    "range1": "1-5",
+    "range2": ".5-2.5",
     "array1": [1, 2, 3],
     "array2": ["a", "b", "c"],
     "boolean": true,

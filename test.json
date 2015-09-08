@@ -11,7 +11,9 @@
       "address": "123 Pacific Ocean",
       "city": "Neptunville",
       "state": "wet"
-    }
+    },
+    "attack_bonus": "1-10",
+    "difficulty": "0.0-1.0"
   },
   "artifact": {
     "name": "Sword of Speed",

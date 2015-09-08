@@ -23,7 +23,9 @@ test_data = {
             'address': '123 Pacific Ocean',
             'city': 'Neptunville',
             'state': 'wet',
-        }
+        },
+        'attack_bonus': '1-10',
+        'difficulty': '0.0-1.0',
     },
     'artifact': {
         'name': 'Sword of Speed',
@@ -91,6 +93,16 @@ test_data_answer = {
                 'city': {'type': 'string'},
                 'state': {'type': 'string'}
             },
+        },
+        'attack_bonus': {
+            'max': 10,
+            'min': 1,
+            'type': 'integer'
+        },
+        'difficulty': {
+            'max': 1.0,
+            'min': 0.0,
+            'type': 'float'
         }
     },
     'artifact': {
