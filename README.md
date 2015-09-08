@@ -52,7 +52,7 @@ This will create a `sample.settings.py` file with the following contents:
         'sample-integer': {
             'type': 'integer'
         },
-        'sample-float' : {
+        'sample-float': {
             'type': 'float'
         },
         'sample-dict': {
