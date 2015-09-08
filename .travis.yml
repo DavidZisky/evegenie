@@ -6,5 +6,8 @@ install:
   - pip install coveralls
 script:
   coverage run --source=evegenie egtest.py
+branches:
+  only:
+    - /.*/
 after_success:
   coveralls
