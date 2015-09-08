@@ -12,10 +12,9 @@ A tool for making Eve schema generation easier.
 
 ## Use
 
-### Cli
-
     python geneve.py your_json_file
 
+<<<<<<< HEAD
 ### In code
 
 ```py
@@ -67,3 +66,6 @@ eg.write_file('mytest.settings.py')
 ## Test
 
     py.test egtest.py
+
+=======
+[More detailed docs](/docs/index.md) or [evegenie.readthedocs.org](http://evegenie.readthedocs.org/en/latest/)
