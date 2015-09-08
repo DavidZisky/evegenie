@@ -5,6 +5,7 @@ Tests for geneve tool.
 
 import json
 import os.path
+import pytest
 from eve.io.mongo import Validator
 from evegenie import EveGenie
 
@@ -153,7 +154,7 @@ def test_input_string():
     :return:
     """
     eg = EveGenie(data=json.dumps(test_data))
-    assert(json.loads(str(eg)) == test_data_answer)
+    assert(dict(eg) == test_data_answer)
 
 
 def test_input_dict():
@@ -163,7 +164,7 @@ def test_input_dict():
     :return:
     """
     eg = EveGenie(data=test_data)
-    assert(json.loads(str(eg)) == test_data_answer)
+    assert(dict(eg) == test_data_answer)
 
 
 def test_input_file():
@@ -173,7 +174,7 @@ def test_input_file():
     :return:
     """
     eg = EveGenie(filename='test.json')
-    assert(json.loads(str(eg)) == test_data_answer)
+    assert(dict(eg) == test_data_answer)
 
 
 def test_input_both_inputs():
@@ -183,7 +184,7 @@ def test_input_both_inputs():
     :return:
     """
     eg = EveGenie(data=test_data, filename='test.json')
-    assert(json.loads(str(eg)) == test_data_answer)
+    assert(dict(eg) == test_data_answer)
 
 
 def test_simple_endpoint_validation():
@@ -193,7 +194,10 @@ def test_simple_endpoint_validation():
     :return:
     """
     eg = EveGenie(data=simple_test_data)
-    data = json.loads(str(eg))
+    data = dict(eg)
     for endpoint in data:
         v = Validator(data[endpoint])
         assert(v.validate(simple_test_data[endpoint]))
+
+if __name__ == '__main__':
+    pytest.main('egtest.py')

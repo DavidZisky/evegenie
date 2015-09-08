@@ -1,7 +1,5 @@
 # Eve Genie
 
-[![Documentation](https://readthedocs.org/projects/evegenie/badge/?version=latest)](http://evegenie.readthedocs.org/en/latest/) [![Build Status](https://travis-ci.org/newmediadenver/evegenie.svg?branch=master)](https://travis-ci.org/newmediadenver/evegenie) [![Coverage Status](https://coveralls.io/repos/newmediadenver/evegenie/badge.svg?branch=master&service=github)](https://coveralls.io/github/newmediadenver/evegenie?branch=master)
-
 A tool for making Eve schema generation easier.
 
 **Use case**: You need to stand up an api quickly. You know what your data looks like in JSON but don't yet know the syntax for Eve/Cerberus.
@@ -12,11 +10,13 @@ A tool for making Eve schema generation easier.
 
 ## Use
 
+### Cli
+
     python geneve.py your_json_file
 
 ### In code
 
-```py
+```python
 from evegenie import EveGenie
 eg = EveGenie(filename='test.json')
 # Or
@@ -24,6 +24,7 @@ with open('test.json', 'r') as ifile:
     data = ifile.read()
 eg = EveGenie(data=data)
 eg.write_file('mytest.settings.py')
+
 ```
 
     cat mytest.settings.py
@@ -74,5 +75,11 @@ Certain strings passed in via the source json will be converted to eve schema ty
 
     py.test egtest.py
 
-=======
-[More detailed docs](/docs/index.md) or [evegenie.readthedocs.org](http://evegenie.readthedocs.org/en/latest/)
+## Api Reference
+
+```eval_rst
+.. autoclass:: evegenie.EveGenie
+    :members:
+    :show-inheritance:
+
+```

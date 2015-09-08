@@ -182,5 +182,8 @@ class EveGenie(object):
     def __str__(self):
         return json.dumps(self.endpoints, indent=4, separators=(',', ' : '))
 
+    def __len__(self):
+        return len(self.endpoints)
+
     def __sizeof__(self):
         return len(self.endpoints)

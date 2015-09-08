@@ -1,4 +1,7 @@
+.DS_Store
 *.pyc
 __pycache__
 *.settings.py
 .idea
+_build
+_static
