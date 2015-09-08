@@ -16,10 +16,13 @@ import sys
 import os
 import shlex
 
+sys.path.insert(0, os.path.abspath('..'))
+import recommonmark
 from recommonmark.parser import CommonMarkParser
 from recommonmark.transform import AutoStructify
-sys.path.append('../')
+
 import evegenie
+
 
 
 source_parsers = {
