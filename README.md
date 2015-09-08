@@ -48,60 +48,64 @@ This will create a `sample.settings.py` file with the following contents:
 
 ```python
 sample-resource = {
-    'sample-list': {
-        'type': 'list',
-        'schema': {
-            'type': 'string'
-        }
-    },
-    'sample-integer': {
-        'type': 'integer'
-    },
-    'sample-float': {
-        'type': 'float'
-    },
-    'sample-dict': {
-        'type': 'dict',
-        'schema': {
-            'sample-embedded-list': {
-                'type': 'list',
-                'schema': {
-                    'type': 'string'
-                }
-            },
-            'sample-embedded-dict': {
-                'type': 'dict',
-                'schema': {
-                    'sample-integer2': {
-                        'type': 'integer'
+    'schema': {
+        'sample-list': {
+            'type': 'list',
+            'schema': {
+                'type': 'string'
+            }
+        },
+        'sample-integer': {
+            'type': 'integer'
+        },
+        'sample-float': {
+            'type': 'float'
+        },
+        'sample-dict': {
+            'type': 'dict',
+            'schema': {
+                'sample-embedded-list': {
+                    'type': 'list',
+                    'schema': {
+                        'type': 'string'
+                    }
+                },
+                'sample-embedded-dict': {
+                    'type': 'dict',
+                    'schema': {
+                        'sample-integer2': {
+                            'type': 'integer'
+                        }
                     }
                 }
             }
+        },
+        'sample-string': {
+            'type': 'string'
         }
-    },
-    'sample-string': {
-        'type': 'string'
     }
 }
 
 sample-resource2 = {
-    'sample-object-id': {
-        'type': 'objectid',
-        'data_relation': {
-            'field': '_id',
-            'resource': 'sample-resource',
-            'embeddable': True
+    'schema': {
+        'sample-object-id': {
+            'type': 'objectid',
+            'data_relation': {
+                'field': '_id',
+                'resource': 'sample-resource',
+                'embeddable': True
+            }
+        },
+        'sample-intrange': {
+            'max': 100,
+            'type': 'integer',
+            'min': 1
+        },
+        'sample-floatrange': {
+            'max': 1.0,
+            'type': 'float',
+            'min': 0.0
         }
-    },
-    'sample-intrange': {
-        'max': 100,
-        'type': 'integer',
-        'min': 1
-    },
-    'sample-floatrange': {
-        'max': 1.0,
-        'type': 'float',
-        'min': 0.0
     }
 }
 
