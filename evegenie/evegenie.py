@@ -144,7 +144,7 @@ class EveGenie(object):
         """
 
         # separators prevents trailing whitespace
-        endpoint = json.dumps(endpoint_schema, indent=4, separators=(',', ' : '))
+        endpoint = json.dumps(endpoint_schema, indent=4, separators=(',', ': '))
         updates = [
             ('"', '\''), # replace doubles with singles
             ('true', 'True'), # convert json booleans to python ones
