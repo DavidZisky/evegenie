@@ -18,97 +18,103 @@ Documentation is within the [/docs directory](/docs/index.md) or online at [eveg
 
 Create a json file, `sample.json`:
 
-    {
-      "sample-resource": {
-        "sample-string": "asdf",
-        "sample-integer": 42,
-        "sample-float": 1.0,
-        "sample-list": ["a", "b", "c"],
-        "sample-dict": {
-          "sample-embedded-list": ["a", "b", "c"],
-          "sample-embedded-dict": {"sample-integer2": 20}
-        }
-      },
-      "sample-resource2": {
-        "sample-object-id": "objectid:sample-resource",
-        "sample-intrange": "1-100",
-        "sample-floatrange": "0.0-1.0"
-      }
+```javascript
+{
+  "sample-resource": {
+    "sample-string": "asdf",
+    "sample-integer": 42,
+    "sample-float": 1.0,
+    "sample-list": ["a", "b", "c"],
+    "sample-dict": {
+      "sample-embedded-list": ["a", "b", "c"],
+      "sample-embedded-dict": {"sample-integer2": 20}
     }
+  },
+  "sample-resource2": {
+    "sample-object-id": "objectid:sample-resource",
+    "sample-intrange": "1-100",
+    "sample-floatrange": "0.0-1.0"
+  }
+}
+```
 
 Then generate your eve schemas using:
 
-    python geneve.py sample.json
+```bash
+python geneve.py sample.json
+```
 
 This will create a `sample.settings.py` file with the following contents:
 
-    sample-resource = {
-        'sample-list': {
-            'type': 'list',
-            'schema': {
-                'type': 'string'
-            }
-        },
-        'sample-integer': {
-            'type': 'integer'
-        },
-        'sample-float': {
-            'type': 'float'
-        },
-        'sample-dict': {
-            'type': 'dict',
-            'schema': {
-                'sample-embedded-list': {
-                    'type': 'list',
-                    'schema': {
-                        'type': 'string'
-                    }
-                },
-                'sample-embedded-dict': {
-                    'type': 'dict',
-                    'schema': {
-                        'sample-integer2': {
-                            'type': 'integer'
-                        }
+```python
+sample-resource = {
+    'sample-list': {
+        'type': 'list',
+        'schema': {
+            'type': 'string'
+        }
+    },
+    'sample-integer': {
+        'type': 'integer'
+    },
+    'sample-float': {
+        'type': 'float'
+    },
+    'sample-dict': {
+        'type': 'dict',
+        'schema': {
+            'sample-embedded-list': {
+                'type': 'list',
+                'schema': {
+                    'type': 'string'
+                }
+            },
+            'sample-embedded-dict': {
+                'type': 'dict',
+                'schema': {
+                    'sample-integer2': {
+                        'type': 'integer'
                     }
                 }
             }
-        },
-        'sample-string': {
-            'type': 'string'
         }
+    },
+    'sample-string': {
+        'type': 'string'
     }
-    
-    sample-resource2 = {
-        'sample-object-id': {
-            'type': 'objectid',
-            'data_relation': {
-                'field': '_id',
-                'resource': 'sample-resource',
-                'embeddable': True
-            }
-        },
-        'sample-intrange': {
-            'max': 100,
-            'type': 'integer',
-            'min': 1
-        },
-        'sample-floatrange': {
-            'max': 1.0,
-            'type': 'float',
-            'min': 0.0
+}
+
+sample-resource2 = {
+    'sample-object-id': {
+        'type': 'objectid',
+        'data_relation': {
+            'field': '_id',
+            'resource': 'sample-resource',
+            'embeddable': True
         }
+    },
+    'sample-intrange': {
+        'max': 100,
+        'type': 'integer',
+        'min': 1
+    },
+    'sample-floatrange': {
+        'max': 1.0,
+        'type': 'float',
+        'min': 0.0
     }
-    
-    
-    
-    eve_settings = {
-        'MONGO_HOST': 'localhost',
-        'MONGO_DBNAME': 'testing',
-        'RESOURCE_METHODS': ['GET', 'POST', 'DELETE'],
-        'BANDWIDTH_SAVER': False,
-        'DOMAIN': {
-            'sample-resource': sample-resource,
-            'sample-resource2': sample-resource2,
-        },
-    }
+}
+
+
+
+eve_settings = {
+    'MONGO_HOST': 'localhost',
+    'MONGO_DBNAME': 'testing',
+    'RESOURCE_METHODS': ['GET', 'POST', 'DELETE'],
+    'BANDWIDTH_SAVER': False,
+    'DOMAIN': {
+        'sample-resource': sample-resource,
+        'sample-resource2': sample-resource2,
+    },
+}
+```
