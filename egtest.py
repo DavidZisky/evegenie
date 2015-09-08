@@ -49,35 +49,26 @@ if not os.path.isfile('test.json'):
 
 test_data_answer = {
     'user': {
-        'name': {
-            'type': 'string',
-        },
-        'age': {
-            'type': 'integer',
-        },
-        'alive': {
-            'type': 'boolean'
-        },
-        'title': {
-            'type': 'string'
-        },
-        'inventory': {
-            'type': 'list',
-            'schema': {
-                'type': 'string'
-            }
-        },
-        'primary_artifact': {
-            'type': 'objectid',
-            'data_relation': {
-                'resource': 'artifact',
-                'field': '_id',
-                'embeddable': True,
+        'schema': {
+            'name': {
+                'type': 'string',
             },
-        },
-        'secondary_artifacts': {
-            'type': 'list',
-            'schema': {
+            'age': {
+                'type': 'integer',
+            },
+            'alive': {
+                'type': 'boolean'
+            },
+            'title': {
+                'type': 'string'
+            },
+            'inventory': {
+                'type': 'list',
+                'schema': {
+                    'type': 'string'
+                }
+            },
+            'primary_artifact': {
                 'type': 'objectid',
                 'data_relation': {
                     'resource': 'artifact',
@@ -85,49 +76,62 @@ test_data_answer = {
                     'embeddable': True,
                 },
             },
-        },
-        'address': {
-            'type': 'dict',
-            'schema': {
-                'address': {'type': 'string'},
-                'city': {'type': 'string'},
-                'state': {'type': 'string'}
+            'secondary_artifacts': {
+                'type': 'list',
+                'schema': {
+                    'type': 'objectid',
+                    'data_relation': {
+                        'resource': 'artifact',
+                        'field': '_id',
+                        'embeddable': True,
+                    },
+                },
             },
-        },
-        'attack_bonus': {
-            'max': 10,
-            'min': 1,
-            'type': 'integer'
-        },
-        'difficulty': {
-            'max': 1.0,
-            'min': 0.0,
-            'type': 'float'
+            'address': {
+                'type': 'dict',
+                'schema': {
+                    'address': {'type': 'string'},
+                    'city': {'type': 'string'},
+                    'state': {'type': 'string'}
+                },
+            },
+            'attack_bonus': {
+                'max': 10,
+                'min': 1,
+                'type': 'integer'
+            },
+            'difficulty': {
+                'max': 1.0,
+                'min': 0.0,
+                'type': 'float'
+            }
         }
     },
     'artifact': {
-        'name': {
-            'type': 'string'
-        },
-        'cost': {
-            'type': 'float'
-        },
-        'color': {
-            'type': 'string'
-        },
-        'stats': {
-            'type': 'dict',
-            'schema': {
-                'weight': {'type': 'float'},
-                'length': {'type': 'float'},
-                'powers': {
-                    'type': 'dict',
-                    'schema': {
-                        'strike': {'type': 'integer'},
-                        'deflect': {'type': 'integer'},
-                        'speed': {'type': 'integer'},
-                    }
-                },
+        'schema': {
+            'name': {
+                'type': 'string'
+            },
+            'cost': {
+                'type': 'float'
+            },
+            'color': {
+                'type': 'string'
+            },
+            'stats': {
+                'type': 'dict',
+                'schema': {
+                    'weight': {'type': 'float'},
+                    'length': {'type': 'float'},
+                    'powers': {
+                        'type': 'dict',
+                        'schema': {
+                            'strike': {'type': 'integer'},
+                            'deflect': {'type': 'integer'},
+                            'speed': {'type': 'integer'},
+                        }
+                    },
+                }
             }
         }
     }
@@ -196,7 +200,7 @@ def test_simple_endpoint_validation():
     eg = EveGenie(data=simple_test_data)
     data = dict(eg)
     for endpoint in data:
-        v = Validator(data[endpoint])
+        v = Validator(data[endpoint]['schema'])
         assert(v.validate(simple_test_data[endpoint]))
 
 if __name__ == '__main__':
