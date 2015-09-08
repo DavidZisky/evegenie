@@ -5,6 +5,7 @@ Tests for geneve tool.
 
 import json
 import os.path
+import pytest
 from eve.io.mongo import Validator
 from evegenie import EveGenie
 
@@ -185,3 +186,6 @@ def test_simple_endpoint_validation():
     for endpoint in data:
         v = Validator(data[endpoint])
         assert(v.validate(simple_test_data[endpoint]))
+
+if __name__ == '__main__':
+    pytest.main('egtest.py')
