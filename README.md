@@ -14,7 +14,6 @@ A tool for making Eve schema generation easier.
 
     python geneve.py your_json_file
 
-<<<<<<< HEAD
 ### In code
 
 ```py
