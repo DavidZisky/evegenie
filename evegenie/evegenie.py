@@ -180,7 +180,7 @@ class EveGenie(object):
         return json.dumps(self.endpoints)
 
     def __str__(self):
-        return json.dumps(self.endpoints, indent=4, separators=(',', ' : '))
+        return json.dumps(self.endpoints, indent=4, separators=(',', ': '))
 
     def __len__(self):
         return len(self.endpoints)
