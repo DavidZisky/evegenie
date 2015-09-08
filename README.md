@@ -1,6 +1,6 @@
 # Eve Genie
 
-[![Build Status](https://travis-ci.org/newmediadenver/evegenie.svg?branch=master)](https://travis-ci.org/newmediadenver/evegenie)
+[![Build Status](https://travis-ci.org/newmediadenver/evegenie.svg?branch=master)](https://travis-ci.org/newmediadenver/evegenie) [![Coverage Status](https://coveralls.io/repos/newmediadenver/evegenie/badge.svg?branch=master&service=github)](https://coveralls.io/github/newmediadenver/evegenie?branch=master)
 
 A tool for making Eve schema generation easier.
 
