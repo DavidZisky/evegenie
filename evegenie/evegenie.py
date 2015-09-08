@@ -42,7 +42,7 @@ class EveGenie(object):
         if isinstance(data, basestring):
             data = json.loads(data)
 
-        self.endpoints = {k: self.parse_endpoint(v) for k, v in data.iteritems()}
+        self.endpoints = {k: {'schema': self.parse_endpoint(v)} for k, v in data.iteritems()}
 
     def parse_endpoint(self, endpoint_source):
         """
