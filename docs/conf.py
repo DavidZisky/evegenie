@@ -17,6 +17,10 @@ import os
 import shlex
 
 from recommonmark.parser import CommonMarkParser
+from recommonmark.transform import AutoStructify
+sys.path.append('../')
+import evegenie
+
 
 source_parsers = {
     '.md': CommonMarkParser,
@@ -38,6 +42,7 @@ source_suffix = ['.rst', '.md']
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinx.ext.autodoc',
     'sphinx.ext.ifconfig',
 ]
 
@@ -292,3 +297,11 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
+
+github_doc_root = 'https://github.com/newmediadenver/evegenie/tree/master/doc/'
+def setup(app):
+    app.add_config_value('recommonmark_config', {
+            'url_resolver': lambda url: github_doc_root + url,
+            'auto_toc_tree_section': 'Contents',
+            }, True)
+    app.add_transform(AutoStructify)

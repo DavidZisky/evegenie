@@ -66,3 +66,12 @@ eg.write_file('mytest.settings.py')
 ## Test
 
     py.test egtest.py
+
+## Api Reference
+
+```eval_rst
+.. autoclass:: evegenie.EveGenie
+    :members:
+    :show-inheritance:
+
+```
