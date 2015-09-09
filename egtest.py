@@ -146,7 +146,22 @@ simple_test_data = {
     },
 }
 
-
+format_endpoint_test = """{
+    'schema': {
+        'age': {
+            'type': 'integer'
+        },
+        'name': {
+            'type': 'string'
+        },
+        'alive': {
+            'type': 'boolean'
+        },
+        'title': {
+            'type': 'string'
+        }
+    }
+}"""
 
 test_data_answer_string = json.dumps(test_data_answer)
 
@@ -202,6 +217,18 @@ def test_simple_endpoint_validation():
     for endpoint in data:
         v = Validator(data[endpoint]['schema'])
         assert(v.validate(simple_test_data[endpoint]))
+
+
+def test_endpoint_format():
+    """
+    Test whether the formatted output for an endpoint is as expected
+
+    :return:
+    """
+    eg = EveGenie(data=simple_test_data)
+    endpoint = eg['user']
+    assert(eg.format_endpoint(endpoint) == format_endpoint_test)
+
 
 if __name__ == '__main__':
     pytest.main('egtest.py')
