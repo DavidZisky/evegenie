@@ -1,0 +1,32 @@
+{
+  "user": {
+    "name": "Turtle Man",
+    "age": 71,
+    "alive": true,
+    "title": "Champion of Sea Dwellers",
+    "inventory": ["map", "apple", "sword", "potion"],
+    "primary_artifact": "objectid:artifact",
+    "secondary_artifacts": ["objectid: artifact", "objectid:artifact"],
+    "address": {
+      "address": "123 Pacific Ocean",
+      "city": "Neptunville",
+      "state": "wet"
+    },
+    "attack_bonus": "1-10",
+    "difficulty": "0.0-1.0"
+  },
+  "artifact": {
+    "name": "Sword of Speed",
+    "cost": 501.01,
+    "color": "red",
+    "stats": {
+      "weight": 200.01,
+      "length": 3.01,
+      "powers": {
+          "strike": 1,
+          "deflect": 1,
+          "speed": 3
+      }
+    }
+  }
+}

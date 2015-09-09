@@ -1,0 +1,118 @@
+
+user = {
+    'schema': {
+        'name': {
+            'type': 'string'
+        },
+        'title': {
+            'type': 'string'
+        },
+        'age': {
+            'type': 'integer'
+        },
+        'alive': {
+            'type': 'boolean'
+        },
+        'primary_artifact': {
+            'type': 'objectid',
+            'data_relation': {
+                'field': '_id',
+                'resource': 'artifact',
+                'embeddable': True
+            }
+        },
+        'difficulty': {
+            'max': 1.0,
+            'type': 'float',
+            'min': 0.0
+        },
+        'attack_bonus': {
+            'max': 10,
+            'type': 'integer',
+            'min': 1
+        },
+        'inventory': {
+            'type': 'list',
+            'schema': {
+                'type': 'string'
+            }
+        },
+        'address': {
+            'type': 'dict',
+            'schema': {
+                'city': {
+                    'type': 'string'
+                },
+                'state': {
+                    'type': 'string'
+                },
+                'address': {
+                    'type': 'string'
+                }
+            }
+        },
+        'secondary_artifacts': {
+            'type': 'list',
+            'schema': {
+                'type': 'objectid',
+                'data_relation': {
+                    'field': '_id',
+                    'resource': 'artifact',
+                    'embeddable': True
+                }
+            }
+        }
+    }
+}
+
+artifact = {
+    'schema': {
+        'color': {
+            'type': 'string'
+        },
+        'cost': {
+            'type': 'float'
+        },
+        'stats': {
+            'type': 'dict',
+            'schema': {
+                'length': {
+                    'type': 'float'
+                },
+                'powers': {
+                    'type': 'dict',
+                    'schema': {
+                        'strike': {
+                            'type': 'integer'
+                        },
+                        'speed': {
+                            'type': 'integer'
+                        },
+                        'deflect': {
+                            'type': 'integer'
+                        }
+                    }
+                },
+                'weight': {
+                    'type': 'float'
+                }
+            }
+        },
+        'name': {
+            'type': 'string'
+        }
+    }
+}
+
+
+
+eve_settings = {
+    'MONGO_HOST': 'localhost',
+    'MONGO_DBNAME': 'testing',
+    'RESOURCE_METHODS': ['GET', 'POST', 'DELETE'],
+    'BANDWIDTH_SAVER': False,
+    'DOMAIN': {
+        'user': user,
+        'artifact': artifact,
+    },
+}
