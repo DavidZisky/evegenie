@@ -4,9 +4,14 @@ Tests for geneve tool.
 """
 
 import json
-import os.path
+import os
+import sys
 import pytest
 from eve.io.mongo import Validator
+
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(parent_dir)
+
 from evegenie import EveGenie
 
 
@@ -230,5 +235,28 @@ def test_endpoint_format():
     assert(eg.format_endpoint(endpoint) == format_endpoint_test)
 
 
+def test_output_file():
+    """
+    Tests writing schema to file and compares the files output to a control.
+
+    :return:
+    """
+    outfile = parent_dir + '/tests/test_output'
+    controlfile = parent_dir + '/tests/.test_out_control'
+    eg = EveGenie(data=test_data)
+
+    with open(controlfile, 'r') as ifile:
+        control = ifile.read()
+
+    eg.write_file(outfile)
+    with open(outfile, 'r') as ifile:
+        test_schema = ifile.read()
+
+    os.remove(outfile)
+    assert(test_schema == control)
+
+
 if __name__ == '__main__':
-    pytest.main('egtest.py')
+    print sys.path
+    print "test"
+    pytest.main('{}/tests/egtest.py'.format(parent_dir))
