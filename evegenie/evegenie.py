@@ -185,5 +185,8 @@ class EveGenie(object):
     def __len__(self):
         return len(self.endpoints)
 
+    def __getitem__(self, k):
+        return self.endpoints[k]
+
     def __sizeof__(self):
         return len(self.endpoints)
