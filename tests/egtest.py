@@ -400,6 +400,4 @@ def test_evegenie_len():
 
 
 if __name__ == '__main__':
-    print sys.path
-    print "test"
     pytest.main('{}/tests/egtest.py'.format(parent_dir))
