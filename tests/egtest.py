@@ -389,6 +389,16 @@ def test_get_type_fail():
         eg.get_type(source)
 
 
+def test_evegenie_len():
+    """
+    Test that an EveGenie object correctly reports its length.
+
+    :return:
+    """
+    eg = EveGenie(data=simple_test_data)
+    assert(len(eg) == 1)
+
+
 if __name__ == '__main__':
     print sys.path
     print "test"
