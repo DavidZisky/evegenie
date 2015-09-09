@@ -167,6 +167,15 @@ format_endpoint_test = """{
 
 test_data_answer_string = json.dumps(test_data_answer)
 
+def test_evegenie_no_data():
+    """
+    Test that attempting to initilaize EveGenie object with no data errors.
+
+    :return:
+    """
+    with pytest.raises(TypeError):
+        eg = EveGenie()
+
 
 def test_input_string():
     """
