@@ -75,11 +75,4 @@ Certain strings passed in via the source json will be converted to eve schema ty
 
     py.test egtest.py
 
-## Api Reference
 
-```eval_rst
-.. autoclass:: evegenie.EveGenie
-    :members:
-    :show-inheritance:
-
-```
