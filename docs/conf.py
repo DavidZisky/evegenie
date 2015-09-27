@@ -17,17 +17,9 @@ import os
 import shlex
 
 sys.path.insert(0, os.path.abspath('..'))
-import recommonmark
-from recommonmark.parser import CommonMarkParser
-from recommonmark.transform import AutoStructify
 
 import evegenie
 
-
-
-source_parsers = {
-    '.md': CommonMarkParser,
-}
 
 source_suffix = ['.rst', '.md']
 
@@ -302,9 +294,4 @@ texinfo_documents = [
 #texinfo_no_detailmenu = False
 
 github_doc_root = 'https://github.com/newmediadenver/evegenie/tree/master/doc/'
-def setup(app):
-    app.add_config_value('recommonmark_config', {
-            'url_resolver': lambda url: github_doc_root + url,
-            'auto_toc_tree_section': 'Contents',
-            }, True)
-    app.add_transform(AutoStructify)
+
