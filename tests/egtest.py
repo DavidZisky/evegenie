@@ -21,6 +21,7 @@ test_data = {
     'user': {
         'name': 'Turtle Man',
         'age': 71,
+        'experience': None,
         'alive': True,
         'title': 'Champion of Sea Dwellers',
         'inventory': ['map', 'apple', 'sword', 'potion'],
@@ -62,6 +63,9 @@ test_data_answer = {
             },
             'age': {
                 'type': 'integer',
+            },
+            'experience': {
+                'nullable': True,
             },
             'alive': {
                 'type': 'boolean'
@@ -370,11 +374,22 @@ def test_get_type_floatrange():
     """
     Test that a float range string maps to an eve 'float'
 
-    :return':
+    :return:
     """
     source = "0.0-1.0"
     eg = EveGenie(data=simple_test_data)
     assert(eg.get_type(source) == 'float')
+
+
+def test_get_type_null():
+    """
+    Test that a None maps to an eve 'null'.
+
+    :return:
+    """
+    source = None
+    eg = EveGenie(data=simple_test_data)
+    assert(eg.get_type(source) == 'null')
 
 
 def test_get_type_fail():

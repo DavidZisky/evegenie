@@ -31,11 +31,8 @@ user = {
             'type': 'integer',
             'min': 1
         },
-        'inventory': {
-            'type': 'list',
-            'schema': {
-                'type': 'string'
-            }
+        'experience': {
+            'nullable': True
         },
         'address': {
             'type': 'dict',
@@ -60,6 +57,12 @@ user = {
                     'resource': 'artifact',
                     'embeddable': True
                 }
+            }
+        },
+        'inventory': {
+            'type': 'list',
+            'schema': {
+                'type': 'string'
             }
         }
     }
