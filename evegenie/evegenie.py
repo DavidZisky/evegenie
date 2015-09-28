@@ -175,7 +175,7 @@ class EveGenie(object):
             }
         )
         with open(filename, 'w') as ofile:
-            ofile.write(settings)
+            ofile.write(settings + "\n")
 
     def __iter__(self):
        for k, v in self.endpoints.iteritems():
