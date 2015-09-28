@@ -4,6 +4,7 @@ EveGenie class for building Eve settings and schemas.
 import json
 import os.path
 import re
+from types import NoneType
 
 from jinja2 import Environment, PackageLoader
 
@@ -97,7 +98,10 @@ class EveGenie(object):
                 if match:
                     item['min'] = float(match[0])
                     item['max'] = float(match[1])
-
+        elif item['type'] == 'null':
+            # if null, don't assume any type, just set nullable to true.
+            item['nullable'] = True
+            del item['type']
 
         return item
 
@@ -116,6 +120,7 @@ class EveGenie(object):
             float: 'float',
             dict: 'dict',
             list: 'list',
+            NoneType: 'null',
         }
         source_type = type(source)
 
@@ -170,7 +175,7 @@ class EveGenie(object):
             }
         )
         with open(filename, 'w') as ofile:
-            ofile.write(settings)
+            ofile.write(settings + "\n")
 
     def __iter__(self):
        for k, v in self.endpoints.iteritems():
