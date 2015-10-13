@@ -50,6 +50,9 @@ test_data = {
                 'speed': 3,
             },
         }
+    },
+    'power-up': {
+        'name': 'Star',
     }
 }
 
@@ -58,6 +61,13 @@ if not os.path.isfile('test.json'):
         ofile.write(json.dumps(test_data, indent=4, separators=(',',' : ')))
 
 test_data_answer = {
+    'power-up': {
+        'schema': {
+            'name': {
+                'type': 'string'
+            }
+        }
+    },
     'user': {
         'schema': {
             'name': {
