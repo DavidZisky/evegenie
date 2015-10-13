@@ -70,6 +70,12 @@ class EveGenie(object):
             item['schema'] = {}
             for k, i in endpoint_item.iteritems():
                 item['schema'][k] = self.parse_item(i)
+
+                # if allow_unknown, remove the type and set allow_unknown.
+                if k == 'allow_unknown' and isinstance(i, bool):
+                    del item['schema']
+                    del item['type']
+                    item[k] = i
         elif item['type'] == 'list':
             # recursively parse each item in a list and add to item schema
             item['schema'] = {}

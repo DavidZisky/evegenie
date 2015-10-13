@@ -34,6 +34,7 @@ test_data = {
         },
         'attack_bonus': '1-10',
         'difficulty': '0.0-1.0',
+        'attributes': {'allow_unknown': True},
     },
     'artifact': {
         'name': 'Sword of Speed',
@@ -44,6 +45,7 @@ test_data = {
             'length': 3.01,
             'powers': {
                 'strike': 1,
+                'extra_powers': {'allow_unknown': True},
                 'deflect': 1,
                 'speed': 3,
             },
@@ -115,6 +117,9 @@ test_data_answer = {
                 'max': 1.0,
                 'min': 0.0,
                 'type': 'float'
+            },
+            'attributes': {
+                'allow_unknown': True
             }
         }
     },
@@ -140,6 +145,7 @@ test_data_answer = {
                             'strike': {'type': 'integer'},
                             'deflect': {'type': 'integer'},
                             'speed': {'type': 'integer'},
+                            'extra_powers': {'allow_unknown': True}
                         }
                     },
                 }
