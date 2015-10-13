@@ -1,5 +1,5 @@
 {% for endpoint, endpont_schema in endpoints.iteritems() %}
-{{ endpoint }} = {{ endpont_schema }}
+{{ endpoint | replace('-', '_') }} = {{ endpont_schema }}
 {% endfor %}
 
 
@@ -10,7 +10,7 @@ eve_settings = {
     'BANDWIDTH_SAVER': False,
     'DOMAIN': {
         {%- for k in endpoints %}
-        '{{ k }}': {{ k }},
+        '{{ k }}': {{ k | replace('-', '_') }},
         {%- endfor %}
     },
 }
