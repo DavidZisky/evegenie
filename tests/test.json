@@ -35,5 +35,8 @@
         "speed": 3
       }
     }
+  },
+  "power-up": {
+    "name": "star"
   }
 }

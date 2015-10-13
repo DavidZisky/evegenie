@@ -1,4 +1,12 @@
 
+power_up = {
+    'schema': {
+        'name': {
+            'type': 'string'
+        }
+    }
+}
+
 user = {
     'schema': {
         'name': {
@@ -121,6 +129,7 @@ eve_settings = {
     'RESOURCE_METHODS': ['GET', 'POST', 'DELETE'],
     'BANDWIDTH_SAVER': False,
     'DOMAIN': {
+        'power-up': power_up,
         'user': user,
         'artifact': artifact,
     },
