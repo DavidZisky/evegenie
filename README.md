@@ -33,7 +33,10 @@ Create a json file, `sample.json`:
   "sample-resource2": {
     "sample-object-id": "objectid:sample-resource",
     "sample-intrange": "1-100",
-    "sample-floatrange": "0.0-1.0"
+    "sample-floatrange": "0.0-1.0",
+    "sample-unknown": {
+      "allow_unknown": true
+    }
   }
 }
 ```
@@ -95,6 +98,9 @@ sample-resource2 = {
                 'resource': 'sample-resource',
                 'embeddable': True
             }
+        },
+        'sample-unknown': {
+            'allow_unknown': True
         },
         'sample-intrange': {
             'max': 100,
