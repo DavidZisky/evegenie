@@ -220,7 +220,7 @@ def test_input_file():
 
     :return:
     """
-    eg = EveGenie(filename='test.json')
+    eg = EveGenie(filename=parent_dir + '/tests/test.json')
     assert(OrderedDict(eg) == test_data_answer)
 
 
