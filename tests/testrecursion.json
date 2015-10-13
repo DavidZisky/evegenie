@@ -13,6 +13,9 @@
     },
     "objectid": "objectid:testentity2",
     "string": "Hello World",
+    "unknown": {
+      "allow_unknown": true
+    },
     "embedded1": {
       "array1": [1, 2, 3],
       "array2": ["a", "b", "c"],
@@ -29,7 +32,10 @@
           "e": "f"
         },
         "objectid": "objectid:testentity2",
-        "string": "Hello World"
+        "string": "Hello World",
+        "unknown": {
+          "allow_unknown": true
+        }
       }
     },
     "embedded2": [
@@ -49,7 +55,10 @@
             "e": "f"
           },
           "objectid": "objectid:testentity2",
-          "string": "Hello World"
+          "string": "Hello World",
+          "unknown": {
+            "allow_unknown": true
+          }
         }
       }
     ]

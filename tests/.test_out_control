@@ -59,6 +59,9 @@ user = {
                 }
             }
         },
+        'attributes': {
+            'allow_unknown': True
+        },
         'inventory': {
             'type': 'list',
             'schema': {
@@ -87,6 +90,9 @@ artifact = {
                     'schema': {
                         'strike': {
                             'type': 'integer'
+                        },
+                        'extra_powers': {
+                            'allow_unknown': True
                         },
                         'speed': {
                             'type': 'integer'

@@ -14,7 +14,10 @@
       "state": "wet"
     },
     "attack_bonus": "1-10",
-    "difficulty": "0.0-1.0"
+    "difficulty": "0.0-1.0",
+    "attributes": {
+      "allow_unknown": true
+    }
   },
   "artifact": {
     "name": "Sword of Speed",
@@ -24,9 +27,12 @@
       "weight": 200.01,
       "length": 3.01,
       "powers": {
-          "strike": 1,
-          "deflect": 1,
-          "speed": 3
+        "strike": 1,
+        "extra_powers": {
+          "allow_unknown": true
+        },
+        "deflect": 1,
+        "speed": 3
       }
     }
   }
