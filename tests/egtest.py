@@ -201,8 +201,6 @@ def test_input_string():
     :return:
     """
     eg = EveGenie(data=json.dumps(test_data))
-    print OrderedDict(eg)
-    print test_data_answer
     assert(OrderedDict(eg) == test_data_answer)
 
 
