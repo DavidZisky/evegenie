@@ -1,25 +1,26 @@
 
-power_up = {
-    'schema': {
-        'name': {
-            'type': 'string'
-        }
-    }
-}
-
 user = {
     'schema': {
         'name': {
             'type': 'string'
         },
-        'title': {
-            'type': 'string'
-        },
         'age': {
             'type': 'integer'
         },
+        'experience': {
+            'nullable': True
+        },
         'alive': {
             'type': 'boolean'
+        },
+        'title': {
+            'type': 'string'
+        },
+        'inventory': {
+            'type': 'list',
+            'schema': {
+                'type': 'string'
+            }
         },
         'primary_artifact': {
             'type': 'objectid',
@@ -27,33 +28,6 @@ user = {
                 'field': '_id',
                 'resource': 'artifact',
                 'embeddable': True
-            }
-        },
-        'difficulty': {
-            'max': 1.0,
-            'type': 'float',
-            'min': 0.0
-        },
-        'attack_bonus': {
-            'max': 10,
-            'type': 'integer',
-            'min': 1
-        },
-        'experience': {
-            'nullable': True
-        },
-        'address': {
-            'type': 'dict',
-            'schema': {
-                'city': {
-                    'type': 'string'
-                },
-                'state': {
-                    'type': 'string'
-                },
-                'address': {
-                    'type': 'string'
-                }
             }
         },
         'secondary_artifacts': {
@@ -67,29 +41,53 @@ user = {
                 }
             }
         },
+        'address': {
+            'type': 'dict',
+            'schema': {
+                'address': {
+                    'type': 'string'
+                },
+                'city': {
+                    'type': 'string'
+                },
+                'state': {
+                    'type': 'string'
+                }
+            }
+        },
+        'attack_bonus': {
+            'type': 'integer',
+            'min': 1,
+            'max': 10
+        },
+        'difficulty': {
+            'type': 'float',
+            'min': 0.0,
+            'max': 1.0
+        },
         'attributes': {
             'allow_unknown': True
-        },
-        'inventory': {
-            'type': 'list',
-            'schema': {
-                'type': 'string'
-            }
         }
     }
 }
 
 artifact = {
     'schema': {
-        'color': {
+        'name': {
             'type': 'string'
         },
         'cost': {
             'type': 'float'
         },
+        'color': {
+            'type': 'string'
+        },
         'stats': {
             'type': 'dict',
             'schema': {
+                'weight': {
+                    'type': 'float'
+                },
                 'length': {
                     'type': 'float'
                 },
@@ -102,19 +100,21 @@ artifact = {
                         'extra_powers': {
                             'allow_unknown': True
                         },
-                        'speed': {
+                        'deflect': {
                             'type': 'integer'
                         },
-                        'deflect': {
+                        'speed': {
                             'type': 'integer'
                         }
                     }
-                },
-                'weight': {
-                    'type': 'float'
                 }
             }
-        },
+        }
+    }
+}
+
+power_up = {
+    'schema': {
         'name': {
             'type': 'string'
         }
@@ -129,8 +129,8 @@ eve_settings = {
     'RESOURCE_METHODS': ['GET', 'POST', 'DELETE'],
     'BANDWIDTH_SAVER': False,
     'DOMAIN': {
-        'power-up': power_up,
         'user': user,
         'artifact': artifact,
+        'power-up': power_up,
     },
 }

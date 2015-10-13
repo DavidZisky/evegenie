@@ -8,7 +8,7 @@ import json
 import os
 import sys
 import pytest
-from collections import deque
+from collections import deque, OrderedDict
 from eve.io.mongo import Validator
 
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -17,57 +17,50 @@ sys.path.append(parent_dir)
 from evegenie import EveGenie
 
 
-test_data = {
-    'user': {
-        'name': 'Turtle Man',
-        'age': 71,
-        'experience': None,
-        'alive': True,
-        'title': 'Champion of Sea Dwellers',
-        'inventory': ['map', 'apple', 'sword', 'potion'],
-        'primary_artifact': 'objectid:artifact',
-        'secondary_artifacts': ['objectid: artifact', 'objectid:artifact'],
-        'address': {
-            'address': '123 Pacific Ocean',
-            'city': 'Neptunville',
-            'state': 'wet',
-        },
-        'attack_bonus': '1-10',
-        'difficulty': '0.0-1.0',
-        'attributes': {'allow_unknown': True},
-    },
-    'artifact': {
-        'name': 'Sword of Speed',
-        'cost': 501.01,
-        'color': 'red',
-        'stats': {
-            'weight': 200.01,
-            'length': 3.01,
-            'powers': {
-                'strike': 1,
-                'extra_powers': {'allow_unknown': True},
-                'deflect': 1,
-                'speed': 3,
-            },
-        }
-    },
-    'power-up': {
-        'name': 'Star',
-    }
-}
+test_data = OrderedDict([
+    ('user', OrderedDict([
+        ('name', 'Turtle Man'),
+        ('age', 71),
+        ('experience', None),
+        ('alive', True),
+        ('title', 'Champion of Sea Dwellers'),
+        ('inventory', ['map', 'apple', 'sword', 'potion']),
+        ('primary_artifact', 'objectid:artifact'),
+        ('secondary_artifacts', ['objectid: artifact', 'objectid:artifact']),
+        ('address', OrderedDict([
+            ('address', '123 Pacific Ocean'),
+            ('city', 'Neptunville'),
+            ('state', 'wet'),
+        ])),
+        ('attack_bonus', '1-10'),
+        ('difficulty', '0.0-1.0'),
+        ('attributes', {'allow_unknown': True}),
+    ])),
+    ('artifact', OrderedDict([
+        ('name', 'Sword of Speed'),
+        ('cost', 501.01),
+        ('color', 'red'),
+        ('stats', OrderedDict([
+            ('weight', 200.01),
+            ('length', 3.01),
+            ('powers', OrderedDict([
+                ('strike', 1),
+                ('extra_powers', {'allow_unknown': True}),
+                ('deflect', 1),
+                ('speed', 3),
+            ])),
+        ]))
+    ])),
+    ('power-up', OrderedDict([
+        ('name', 'Star'),
+    ]))
+])
 
 if not os.path.isfile('test.json'):
     with open('test.json', 'w') as ofile:
         ofile.write(json.dumps(test_data, indent=4, separators=(',',' : ')))
 
 test_data_answer = {
-    'power-up': {
-        'schema': {
-            'name': {
-                'type': 'string'
-            }
-        }
-    },
     'user': {
         'schema': {
             'name': {
@@ -161,6 +154,13 @@ test_data_answer = {
                 }
             }
         }
+    },
+    'power-up': {
+        'schema': {
+            'name': {
+                'type': 'string'
+            }
+        }
     }
 }
 
@@ -229,7 +229,7 @@ def test_input_file():
     :return:
     """
     eg = EveGenie(filename='test.json')
-    assert(dict(eg) == test_data_answer)
+    assert(OrderedDict(eg) == test_data_answer)
 
 
 def test_input_both_inputs():
@@ -273,7 +273,7 @@ def test_output_file():
     :return:
     """
     outfile = parent_dir + '/tests/test_output'
-    controlfile = parent_dir + '/tests/.test_out_control'
+    controlfile = parent_dir + '/tests/test.output.py'
     eg = EveGenie(data=test_data)
 
     with open(controlfile, 'r') as ifile:
