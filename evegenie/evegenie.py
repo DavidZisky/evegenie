@@ -37,7 +37,7 @@ class EveGenie(object):
                 with open(filename, 'r') as ifile:
                     data = ifile.read().strip()
 
-        if not isinstance(data, (basestring, dict)):
+        if not isinstance(data, (basestring, dict, OrderedDict)):
             raise TypeError('Input is not a string: {}'.format(data))
             sys.exit(1)
 
@@ -85,11 +85,11 @@ class EveGenie(object):
             # add extra data_relation for objectid types
             match = self.objectidregex.match(endpoint_item).group(1)
             if match:
-                item['data_relation'] = {
-                    'resource': match,
-                    'field': '_id',
-                    'embeddable': True,
-                }
+                item['data_relation'] = OrderedDict([
+                    ('resource', match),
+                    ('field', '_id'),
+                    ('embeddable', True),
+                ])
         elif item['type'] == 'integer':
             # if string, it's really an integer range
             if isinstance(endpoint_item, basestring):
@@ -155,8 +155,8 @@ class EveGenie(object):
         :return string of eve schema ready for output
         """
 
-        # separators prevents trailing whitespace
-        endpoint = json.dumps(endpoint_schema, indent=4, separators=(',', ': '))
+        # separators prevents trailing whitespace, sort_keys false keeps order of ordereddict
+        endpoint = json.dumps(endpoint_schema, indent=4, separators=(',', ': '), sort_keys=False)
         updates = [
             ('"', '\''), # replace doubles with singles
             ('true', 'True'), # convert json booleans to python ones

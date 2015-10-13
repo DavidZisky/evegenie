@@ -239,7 +239,7 @@ def test_input_both_inputs():
     :return:
     """
     eg = EveGenie(data=test_data, filename='test.json')
-    assert(dict(eg) == test_data_answer)
+    assert(OrderedDict(eg) == test_data_answer)
 
 
 def test_simple_endpoint_validation():

@@ -25,8 +25,8 @@ user = {
         'primary_artifact': {
             'type': 'objectid',
             'data_relation': {
-                'field': '_id',
                 'resource': 'artifact',
+                'field': '_id',
                 'embeddable': True
             }
         },
@@ -35,8 +35,8 @@ user = {
             'schema': {
                 'type': 'objectid',
                 'data_relation': {
-                    'field': '_id',
                     'resource': 'artifact',
+                    'field': '_id',
                     'embeddable': True
                 }
             }
