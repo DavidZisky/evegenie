@@ -5,6 +5,7 @@ import json
 import os.path
 import re
 from types import NoneType
+from collections import OrderedDict
 
 from jinja2 import Environment, PackageLoader
 
@@ -29,7 +30,7 @@ class EveGenie(object):
         :param filename: file containing json representation of our schema
         :return:
         """
-        self.endpoints = {}
+        self.endpoints = OrderedDict()
 
         if filename and not data:
             if os.path.isfile(filename):
@@ -41,9 +42,9 @@ class EveGenie(object):
             sys.exit(1)
 
         if isinstance(data, basestring):
-            data = json.loads(data)
+            data = json.loads(data, object_pairs_hook=OrderedDict)
 
-        self.endpoints = {k: {'schema': self.parse_endpoint(v)} for k, v in data.iteritems()}
+        self.endpoints = OrderedDict([(k, OrderedDict([('schema', self.parse_endpoint(v))])) for k, v in data.iteritems()])
 
     def parse_endpoint(self, endpoint_source):
         """
@@ -53,8 +54,7 @@ class EveGenie(object):
         :param endpoint_source: dict of fields in an endpoint
         :return: dict representing eve schema for the endpoint
         """
-
-        return {k: self.parse_item(v) for k, v in endpoint_source.iteritems()}
+        return OrderedDict([(k, self.parse_item(v)) for k, v in endpoint_source.iteritems()])
 
     def parse_item(self, endpoint_item):
         """
@@ -64,10 +64,10 @@ class EveGenie(object):
         :param endpoint_item: dict of field within an endpoint
         :return: dict representing eve schema for field
         """
-        item = {'type': self.get_type(endpoint_item)}
+        item = OrderedDict([('type', self.get_type(endpoint_item))])
         if item['type'] == 'dict':
             # recursively parse each item in a dict and add to item schema
-            item['schema'] = {}
+            item['schema'] = OrderedDict()
             for k, i in endpoint_item.iteritems():
                 item['schema'][k] = self.parse_item(i)
 
@@ -78,7 +78,7 @@ class EveGenie(object):
                     item[k] = i
         elif item['type'] == 'list':
             # recursively parse each item in a list and add to item schema
-            item['schema'] = {}
+            item['schema'] = OrderedDict()
             for i in endpoint_item:
                 item['schema'] = self.parse_item(i)
         elif item['type'] == 'objectid':
@@ -126,6 +126,7 @@ class EveGenie(object):
             float: 'float',
             dict: 'dict',
             list: 'list',
+            OrderedDict: 'dict',
             NoneType: 'null',
         }
         source_type = type(source)
@@ -176,9 +177,7 @@ class EveGenie(object):
         template = self.template_env.get_template('settings.py.j2')
 
         settings = template.render(
-            endpoints={
-                endpoint: self.format_endpoint(schema) for endpoint, schema in self.endpoints.iteritems()
-            }
+            endpoints=OrderedDict([(endpoint, self.format_endpoint(schema)) for endpoint, schema in self.endpoints.iteritems()])
         )
         with open(filename, 'w') as ofile:
             ofile.write(settings + "\n")
