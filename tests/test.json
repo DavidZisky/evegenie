@@ -28,11 +28,11 @@
       "length": 3.01,
       "powers": {
         "strike": 1,
+        "deflect": 1,
+        "speed": 3,
         "extra_powers": {
           "allow_unknown": true
-        },
-        "deflect": 1,
-        "speed": 3
+        }
       }
     }
   },

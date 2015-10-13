@@ -34,7 +34,7 @@ test_data = OrderedDict([
         ])),
         ('attack_bonus', '1-10'),
         ('difficulty', '0.0-1.0'),
-        ('attributes', {'allow_unknown': True}),
+        ('attributes', OrderedDict([('allow_unknown', True)])),
     ])),
     ('artifact', OrderedDict([
         ('name', 'Sword of Speed'),
@@ -45,9 +45,9 @@ test_data = OrderedDict([
             ('length', 3.01),
             ('powers', OrderedDict([
                 ('strike', 1),
-                ('extra_powers', {'allow_unknown': True}),
                 ('deflect', 1),
                 ('speed', 3),
+                ('extra_powers', OrderedDict([('allow_unknown', True)])),
             ])),
         ]))
     ])),
@@ -60,126 +60,118 @@ if not os.path.isfile('test.json'):
     with open('test.json', 'w') as ofile:
         ofile.write(json.dumps(test_data, indent=4, separators=(',',' : ')))
 
-test_data_answer = {
-    'user': {
-        'schema': {
-            'name': {
-                'type': 'string',
-            },
-            'age': {
-                'type': 'integer',
-            },
-            'experience': {
-                'nullable': True,
-            },
-            'alive': {
-                'type': 'boolean'
-            },
-            'title': {
-                'type': 'string'
-            },
-            'inventory': {
-                'type': 'list',
-                'schema': {
-                    'type': 'string'
-                }
-            },
-            'primary_artifact': {
-                'type': 'objectid',
-                'data_relation': {
-                    'resource': 'artifact',
-                    'field': '_id',
-                    'embeddable': True,
-                },
-            },
-            'secondary_artifacts': {
-                'type': 'list',
-                'schema': {
-                    'type': 'objectid',
-                    'data_relation': {
-                        'resource': 'artifact',
-                        'field': '_id',
-                        'embeddable': True,
-                    },
-                },
-            },
-            'address': {
-                'type': 'dict',
-                'schema': {
-                    'address': {'type': 'string'},
-                    'city': {'type': 'string'},
-                    'state': {'type': 'string'}
-                },
-            },
-            'attack_bonus': {
-                'max': 10,
-                'min': 1,
-                'type': 'integer'
-            },
-            'difficulty': {
-                'max': 1.0,
-                'min': 0.0,
-                'type': 'float'
-            },
-            'attributes': {
-                'allow_unknown': True
-            }
-        }
-    },
-    'artifact': {
-        'schema': {
-            'name': {
-                'type': 'string'
-            },
-            'cost': {
-                'type': 'float'
-            },
-            'color': {
-                'type': 'string'
-            },
-            'stats': {
-                'type': 'dict',
-                'schema': {
-                    'weight': {'type': 'float'},
-                    'length': {'type': 'float'},
-                    'powers': {
-                        'type': 'dict',
-                        'schema': {
-                            'strike': {'type': 'integer'},
-                            'deflect': {'type': 'integer'},
-                            'speed': {'type': 'integer'},
-                            'extra_powers': {'allow_unknown': True}
-                        }
-                    },
-                }
-            }
-        }
-    },
-    'power-up': {
-        'schema': {
-            'name': {
-                'type': 'string'
-            }
-        }
-    }
-}
+test_data_answer = OrderedDict([
+    ('user', OrderedDict([
+        ('schema', OrderedDict([
+            ('name', OrderedDict([
+                ('type', 'string'),
+            ])),
+            ('age', OrderedDict([
+                ('type', 'integer'),
+            ])),
+            ('experience', OrderedDict([
+                ('nullable', True),
+            ])),
+            ('alive', OrderedDict([
+                ('type', 'boolean'),
+            ])),
+            ('title', OrderedDict([
+                ('type', 'string'),
+            ])),
+            ('inventory', OrderedDict([
+                ('type', 'list'),
+                ('schema', OrderedDict([
+                    ('type', 'string'),
+                ])),
+            ])),
+            ('primary_artifact', OrderedDict([
+                ('type', 'objectid'),
+                ('data_relation', OrderedDict([
+                    ('resource', 'artifact'),
+                    ('field', '_id'),
+                    ('embeddable', True),
+                ])),
+            ])),
+            ('secondary_artifacts', OrderedDict([
+                ('type', 'list'),
+                ('schema', OrderedDict([
+                    ('type', 'objectid'),
+                    ('data_relation', OrderedDict([
+                        ('resource', 'artifact'),
+                        ('field', '_id'),
+                        ('embeddable', True),
+                    ])),
+                ])),
+            ])),
+            ('address', OrderedDict([
+                ('type', 'dict'),
+                ('schema', OrderedDict([
+                    ('address', OrderedDict([('type', 'string')])),
+                    ('city', OrderedDict([('type', 'string')])),
+                    ('state', OrderedDict([('type', 'string')])),
+                ])),
+            ])),
+            ('attack_bonus', OrderedDict([
+                ('type', 'integer'),
+                ('min', 1),
+                ('max', 10),
+            ])),
+            ('difficulty', OrderedDict([
+                ('type', 'float'),
+                ('min', 0.0),
+                ('max', 1.0),
+            ])),
+            ('attributes', OrderedDict([
+                ('allow_unknown', True),
+            ]))
+        ])),
+    ])),
+    ('artifact', OrderedDict([
+        ('schema', OrderedDict([
+            ('name', OrderedDict([('type', 'string')])),
+            ('cost', OrderedDict([('type', 'float')])),
+            ('color', OrderedDict([('type', 'string')])),
+            ('stats', OrderedDict([
+                ('type', 'dict'),
+                ('schema', OrderedDict([
+                    ('weight', OrderedDict([('type', 'float')])),
+                    ('length', OrderedDict([('type', 'float')])),
+                    ('powers', OrderedDict([
+                        ('type', 'dict'),
+                        ('schema', OrderedDict([
+                            ('strike', OrderedDict([('type', 'integer')])),
+                            ('deflect', OrderedDict([('type', 'integer')])),
+                            ('speed', OrderedDict([('type', 'integer')])),
+                            ('extra_powers', OrderedDict([('allow_unknown', True)]))
+                        ]))
+                    ])),
+                ]))
+            ]))
+        ]))
+    ])),
+    ('power-up', OrderedDict([
+        ('schema', OrderedDict([
+            ('name', OrderedDict([('type', 'string')])),
+        ]))
+    ]))
+])
 
-simple_test_data = {
-    'user': {
-        'name': 'Turtle Man',
-        'age': 71,
-        'alive': True,
-        'title': 'Champion of Sea Dwellers',
-    },
-}
+simple_test_data = OrderedDict([
+    ('user', OrderedDict([
+        ('name', 'Turtle Man'),
+        ('age', 71),
+        ('alive', True),
+        ('title', 'Champion of Sea Dwellers'),
+    ])),
+])
 
 format_endpoint_test = """{
     'schema': {
-        'age': {
-            'type': 'integer'
-        },
         'name': {
             'type': 'string'
+        },
+        'age': {
+            'type': 'integer'
         },
         'alive': {
             'type': 'boolean'
@@ -209,7 +201,9 @@ def test_input_string():
     :return:
     """
     eg = EveGenie(data=json.dumps(test_data))
-    assert(dict(eg) == test_data_answer)
+    print OrderedDict(eg)
+    print test_data_answer
+    assert(OrderedDict(eg) == test_data_answer)
 
 
 def test_input_dict():
@@ -219,7 +213,7 @@ def test_input_dict():
     :return:
     """
     eg = EveGenie(data=test_data)
-    assert(dict(eg) == test_data_answer)
+    assert(OrderedDict(eg) == test_data_answer)
 
 
 def test_input_file():
@@ -249,7 +243,7 @@ def test_simple_endpoint_validation():
     :return:
     """
     eg = EveGenie(data=simple_test_data)
-    data = dict(eg)
+    data = OrderedDict(eg)
     for endpoint in data:
         v = Validator(data[endpoint]['schema'])
         assert(v.validate(simple_test_data[endpoint]))
@@ -349,6 +343,17 @@ def test_get_type_dict():
     :return:
     """
     source = {'a':'b'}
+    eg = EveGenie(data=simple_test_data)
+    assert(eg.get_type(source) == 'dict')
+
+
+def test_get_type_ordereddict():
+    """
+    Test that a OrderedDict maps to an eve 'dict'
+
+    :return:
+    """
+    source = OrderedDict([('a','b')])
     eg = EveGenie(data=simple_test_data)
     assert(eg.get_type(source) == 'dict')
 

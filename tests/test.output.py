@@ -97,14 +97,14 @@ artifact = {
                         'strike': {
                             'type': 'integer'
                         },
-                        'extra_powers': {
-                            'allow_unknown': True
-                        },
                         'deflect': {
                             'type': 'integer'
                         },
                         'speed': {
                             'type': 'integer'
+                        },
+                        'extra_powers': {
+                            'allow_unknown': True
                         }
                     }
                 }
