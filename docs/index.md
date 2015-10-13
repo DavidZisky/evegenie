@@ -70,6 +70,7 @@ Certain strings passed in via the source json will be converted to eve schema ty
 - `"fieldname": "objectid:sample-entity"` will add data_relation to sample-entity to the schema
 - `"fieldname": "0-100"` will create an integer with a min of 0 and a max of 100
 - `"fieldname": "0.0-1.0"` will create a float with a min of 0 and a max of 1
+- `"fieldname": {"allow_unknown": true}` will translate directly to fieldname that allows the unknown
 
 ## Test
 
