@@ -433,11 +433,7 @@ def test_evegenie_len():
     assert(len(eg) == 1)
 
 
-def test_fail():
-    assert(1 ==2)
-
 
 if __name__ == '__main__':
     code = pytest.main('{}/tests/egtest.py'.format(parent_dir))
     sys.exit(code)
-
