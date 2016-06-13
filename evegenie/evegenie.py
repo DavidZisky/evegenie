@@ -39,7 +39,6 @@ class EveGenie(object):
 
         if not isinstance(data, (basestring, dict, OrderedDict)):
             raise TypeError('Input is not a string: {}'.format(data))
-            sys.exit(1)
 
         if isinstance(data, basestring):
             data = json.loads(data, object_pairs_hook=OrderedDict)
@@ -186,17 +185,8 @@ class EveGenie(object):
        for k, v in self.endpoints.iteritems():
           yield k, v
 
-    def __repr__(self):
-        return json.dumps(self.endpoints)
-
-    def __str__(self):
-        return json.dumps(self.endpoints, indent=4, separators=(',', ': '))
-
     def __len__(self):
         return len(self.endpoints)
 
     def __getitem__(self, k):
         return self.endpoints[k]
-
-    def __sizeof__(self):
-        return len(self.endpoints)
