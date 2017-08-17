@@ -1,6 +1,6 @@
 # Eve Genie
 
-![Project unmaintained](https://img.shields.io/badge/project-unmaintained-red.svg)[![Documentation](https://readthedocs.org/projects/evegenie/badge/?version=latest)](http://evegenie.readthedocs.org/en/latest/) [![Build Status](https://travis-ci.org/drud/evegenie.svg?branch=master)](https://travis-ci.org/drud/evegenie) [![Coverage Status](https://coveralls.io/repos/drud/evegenie/badge.svg?branch=master&service=github)](https://coveralls.io/github/drud/evegenie?branch=master)
+![Project unmaintained](https://img.shields.io/badge/project-unmaintained-red.svg) [![Documentation](https://readthedocs.org/projects/evegenie/badge/?version=latest)](http://evegenie.readthedocs.org/en/latest/) [![Build Status](https://travis-ci.org/drud/evegenie.svg?branch=master)](https://travis-ci.org/drud/evegenie) [![Coverage Status](https://coveralls.io/repos/drud/evegenie/badge.svg?branch=master&service=github)](https://coveralls.io/github/drud/evegenie?branch=master)
 
 A tool for making [Eve](http://python-eve.org) schema generation easier.
 
