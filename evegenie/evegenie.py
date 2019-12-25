@@ -4,7 +4,7 @@ EveGenie class for building Eve settings and schemas.
 import json
 import os.path
 import re
-from types import NoneType
+#from types import NoneType
 from collections import OrderedDict
 
 from jinja2 import Environment, PackageLoader
@@ -37,13 +37,13 @@ class EveGenie(object):
                 with open(filename, 'r') as ifile:
                     data = ifile.read().strip()
 
-        if not isinstance(data, (basestring, dict, OrderedDict)):
+        if not isinstance(data, (str, dict, OrderedDict)):
             raise TypeError('Input is not a string: {}'.format(data))
 
-        if isinstance(data, basestring):
+        if isinstance(data, str):
             data = json.loads(data, object_pairs_hook=OrderedDict)
 
-        self.endpoints = OrderedDict([(k, OrderedDict([('schema', self.parse_endpoint(v))])) for k, v in data.iteritems()])
+        self.endpoints = OrderedDict([(k, OrderedDict([('schema', self.parse_endpoint(v))])) for k, v in data.items()])
 
     def parse_endpoint(self, endpoint_source):
         """
@@ -53,7 +53,7 @@ class EveGenie(object):
         :param endpoint_source: dict of fields in an endpoint
         :return: dict representing eve schema for the endpoint
         """
-        return OrderedDict([(k, self.parse_item(v)) for k, v in endpoint_source.iteritems()])
+        return OrderedDict([(k, self.parse_item(v)) for k, v in endpoint_source.items()])
 
     def parse_item(self, endpoint_item):
         """
@@ -67,7 +67,7 @@ class EveGenie(object):
         if item['type'] == 'dict':
             # recursively parse each item in a dict and add to item schema
             item['schema'] = OrderedDict()
-            for k, i in endpoint_item.iteritems():
+            for k, i in endpoint_item.items():
                 item['schema'][k] = self.parse_item(i)
 
                 # if allow_unknown, remove the type and set allow_unknown.
@@ -91,14 +91,14 @@ class EveGenie(object):
                 ])
         elif item['type'] == 'integer':
             # if string, it's really an integer range
-            if isinstance(endpoint_item, basestring):
+            if isinstance(endpoint_item, str):
                 match = self.intrangeregex.match(endpoint_item).group(1, 2)
                 if match:
                     item['min'] = int(match[0])
                     item['max'] = int(match[1])
         elif item['type'] == 'float':
             # if string, it's really a float range
-            if isinstance(endpoint_item, basestring):
+            if isinstance(endpoint_item, str):
                 match = self.floatrangeregex.match(endpoint_item).group(1, 2)
                 if match:
                     item['min'] = float(match[0])
@@ -118,7 +118,7 @@ class EveGenie(object):
         :return: eve schema type representing source type
         """
         type_mapper = {
-            unicode: 'string',
+            #unicode: 'string',
             str: 'string',
             bool: 'boolean',
             int: 'integer',
@@ -126,13 +126,15 @@ class EveGenie(object):
             dict: 'dict',
             list: 'list',
             OrderedDict: 'dict',
-            NoneType: 'null',
+            type(None): 'null',
         }
         source_type = type(source)
+
 
         if source_type in type_mapper:
             eve_type = type_mapper[source_type]
         else:
+            print(source_type)
             raise TypeError('Value types must be in [{0}]'.format(', '.join(type_mapper.values())))
 
         # Evegenie special strings
@@ -176,13 +178,13 @@ class EveGenie(object):
         template = self.template_env.get_template('settings.py.j2')
 
         settings = template.render(
-            endpoints=OrderedDict([(endpoint, self.format_endpoint(schema)) for endpoint, schema in self.endpoints.iteritems()])
+            endpoints=OrderedDict([(endpoint, self.format_endpoint(schema)) for endpoint, schema in self.endpoints.items()])
         )
         with open(filename, 'w') as ofile:
             ofile.write(settings + "\n")
 
     def __iter__(self):
-       for k, v in self.endpoints.iteritems():
+       for k, v in self.endpoints.items():
           yield k, v
 
     def __len__(self):

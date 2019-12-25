@@ -1,16 +1,17 @@
-{% for endpoint, endpont_schema in endpoints.iteritems() %}
+import os
+
+MONGO_URI = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/evegenie')
+
+RESOURCE_METHODS = ['GET', 'POST', 'DELETE']
+ITEM_METHODS = ['GET', 'PATCH', 'DELETE']
+
+{% for endpoint, endpont_schema in endpoints.items() %}
 {{ endpoint | replace('-', '_') }} = {{ endpont_schema }}
 {% endfor %}
 
 
-eve_settings = {
-    'MONGO_HOST': 'localhost',
-    'MONGO_DBNAME': 'testing',
-    'RESOURCE_METHODS': ['GET', 'POST', 'DELETE'],
-    'BANDWIDTH_SAVER': False,
-    'DOMAIN': {
+DOMAIN = {
         {%- for k in endpoints %}
         '{{ k }}': {{ k | replace('-', '_') }},
         {%- endfor %}
-    },
 }

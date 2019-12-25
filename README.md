@@ -1,14 +1,14 @@
 # Eve Genie
 
-![Project unmaintained](https://img.shields.io/badge/project-unmaintained-red.svg) [![Documentation](https://readthedocs.org/projects/evegenie/badge/?version=latest)](http://evegenie.readthedocs.org/en/latest/) [![Build Status](https://travis-ci.org/drud/evegenie.svg?branch=master)](https://travis-ci.org/drud/evegenie) [![Coverage Status](https://coveralls.io/repos/drud/evegenie/badge.svg?branch=master&service=github)](https://coveralls.io/github/drud/evegenie?branch=master)
+![Last commit](https://img.shields.io/github/last-commit/davidzisky/evegenie.svg) [![Documentation](https://readthedocs.org/projects/evegenie/badge/?version=latest)](http://evegenie.readthedocs.org/en/latest/) ![](https://github.com/DavidZisky/evegenie/workflows/evegenie_build/badge.svg)
 
-A tool for making [Eve](http://python-eve.org) schema generation easier.
+Evegenie is a tool for making [Eve](http://python-eve.org) schema generation easier. By providing JSON file with data and executing single command it can generate whole settings.py file for your Python Eve application.
 
-**Use case**: You need to stand up an api quickly. You know what your data looks like in JSON but don't yet know the syntax for Eve/Cerberus.
+Latest Eve version tested: 1.0
 
 ## Docs
 
-Documentation is within the [/docs directory](/docs/index.md) or online at [evegenie.readthedocs.org](http://evegenie.readthedocs.org/en/latest/)
+Documentation is within the [/docs directory](/docs/index.md)
 
 ## Requirements
 
@@ -16,7 +16,7 @@ Documentation is within the [/docs directory](/docs/index.md) or online at [eveg
 
 ## Example Usage
 
-Create a json file, `sample.json`:
+Create a json file, `sample.json`. 
 
 ```javascript
 {
@@ -44,25 +44,41 @@ Create a json file, `sample.json`:
 Then generate your eve schemas using:
 
 ```bash
-python geneve.py sample.json
+python3 geneve.py sample.json
 ```
 
-This will create a `sample.settings.py` file with the following contents:
+This will create a `sample.settings.py` file. Change it's name to settings.py and you can simply run the API with:
+```bash
+python3 run.py
+```
+
+Geneve created file with the following contents which is used by Python Eve as a settings file:
 
 ```python
-sample-resource = {
+import os
+
+MONGO_URI = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/evegenie')
+
+RESOURCE_METHODS = ['GET', 'POST', 'DELETE']
+ITEM_METHODS = ['GET', 'PATCH', 'DELETE']
+
+
+sample_resource = {
     'schema': {
-        'sample-list': {
-            'type': 'list',
-            'schema': {
-                'type': 'string'
-            }
+        'sample-string': {
+            'type': 'string'
         },
         'sample-integer': {
             'type': 'integer'
         },
         'sample-float': {
             'type': 'float'
+        },
+        'sample-list': {
+            'type': 'list',
+            'schema': {
+                'type': 'string'
+            }
         },
         'sample-dict': {
             'type': 'dict',
@@ -82,50 +98,41 @@ sample-resource = {
                     }
                 }
             }
-        },
-        'sample-string': {
-            'type': 'string'
         }
     }
 }
 
-sample-resource2 = {
+sample_resource2 = {
     'schema': {
         'sample-object-id': {
             'type': 'objectid',
             'data_relation': {
-                'field': '_id',
                 'resource': 'sample-resource',
+                'field': '_id',
                 'embeddable': True
             }
         },
-        'sample-unknown': {
-            'allow_unknown': True
-        },
         'sample-intrange': {
-            'max': 100,
             'type': 'integer',
-            'min': 1
+            'min': 1,
+            'max': 100
         },
         'sample-floatrange': {
-            'max': 1.0,
             'type': 'float',
-            'min': 0.0
+            'min': 0.0,
+            'max': 1.0
+        },
+        'sample-unknown': {
+            'allow_unknown': True
         }
     }
 }
 
 
 
-eve_settings = {
-    'MONGO_HOST': 'localhost',
-    'MONGO_DBNAME': 'testing',
-    'RESOURCE_METHODS': ['GET', 'POST', 'DELETE'],
-    'BANDWIDTH_SAVER': False,
-    'DOMAIN': {
-        'sample-resource': sample-resource,
-        'sample-resource2': sample-resource2,
-    },
+DOMAIN = {
+        'sample-resource': sample_resource,
+        'sample-resource2': sample_resource2,
 }
-```
 
+```

@@ -1,1 +1,1 @@
-from evegenie import EveGenie
+from .evegenie import EveGenie
