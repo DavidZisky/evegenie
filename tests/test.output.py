@@ -1,3 +1,10 @@
+import os
+
+MONGO_URI = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/evegenie')
+
+RESOURCE_METHODS = ['GET', 'POST', 'DELETE']
+ITEM_METHODS = ['GET', 'PATCH', 'DELETE']
+
 
 user = {
     'schema': {
@@ -123,14 +130,8 @@ power_up = {
 
 
 
-eve_settings = {
-    'MONGO_HOST': 'localhost',
-    'MONGO_DBNAME': 'testing',
-    'RESOURCE_METHODS': ['GET', 'POST', 'DELETE'],
-    'BANDWIDTH_SAVER': False,
-    'DOMAIN': {
+DOMAIN = {
         'user': user,
         'artifact': artifact,
         'power-up': power_up,
-    },
 }

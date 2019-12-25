@@ -435,5 +435,8 @@ def test_evegenie_len():
 
 
 if __name__ == '__main__':
-    code = pytest.main('{}/tests/egtest.py'.format(parent_dir))
+    pytest_args = [
+        '{}/tests/egtest.py'.format(parent_dir)
+    ]
+    code = pytest.main(pytest_args)
     sys.exit(code)
