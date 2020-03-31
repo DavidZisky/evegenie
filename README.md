@@ -1,6 +1,6 @@
 # Eve Genie
 
-![Last commit](https://img.shields.io/github/last-commit/davidzisky/evegenie.svg) [![Documentation](https://readthedocs.org/projects/evegenie/badge/?version=latest)](http://evegenie.readthedocs.org/en/latest/) ![](https://github.com/DavidZisky/evegenie/workflows/evegenie_build/badge.svg)
+![](https://img.shields.io/github/last-commit/DavidZisky/evegenie) [![Documentation](https://readthedocs.org/projects/evegenie/badge/?version=latest)](http://evegenie.readthedocs.org/en/latest/) ![](https://github.com/DavidZisky/evegenie/workflows/evegenie_build/badge.svg)
 
 Evegenie is a tool for making [Eve](http://python-eve.org) schema generation easier. By providing JSON file with data and executing single command it can generate whole settings.py file for your Python Eve application. Originally developed by [@drud](https://github.com/drud)
 
