@@ -5,7 +5,7 @@
 
 Evegenie is a tool for making [Eve](http://python-eve.org) schema generation easier. By providing JSON file with data and executing single command it can generate whole settings.py file for your Python Eve application. Originally developed by [@drud](https://github.com/drud)
 
-Latest Eve version tested: 1.0
+Latest Eve version tested: 1.1.3
 
 ## Docs
 
