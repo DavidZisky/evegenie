@@ -7,13 +7,16 @@ Evegenie is a tool for making [Eve](http://python-eve.org) schema generation eas
 
 Latest Eve version tested: 1.1.5
 
-## Docs
-
-Documentation is within the [/docs directory](/docs/index.md)
-
 ## Requirements
 
-    sudo pip install -r requirements.txt
+```bash
+pip install -r requirements.txt
+```
+    
+ You should install Python Eve yourself (not included in requirements)
+```bash
+pip install eve
+```
 
 ## Example Usage
 
