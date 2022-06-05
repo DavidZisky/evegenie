@@ -7,6 +7,12 @@ Evegenie is a tool for making [Eve](http://python-eve.org) schema generation eas
 
 Latest Eve version tested: 1.1.5
 
+Python Eve (by default) uses MongoDB as a database. The easiest way for quick development with MongoDB is to sping up a MongoDB container by executing:
+
+```bash
+docker run --name mongodb -p 27017:27017 -d mongo
+```
+
 ## Requirements
 
 ```bash
