@@ -5,9 +5,9 @@
 
 Evegenie is a tool for making [Eve](http://python-eve.org) schema generation easier. By providing JSON file with data and executing single command it can generate whole settings.py file for your Python Eve application. Originally developed by [@drud](https://github.com/drud)
 
-Latest Eve version tested: 1.1.5
+Latest Eve version tested: 2.0
 
-Python Eve (by default) uses MongoDB as a database. The easiest way for quick development with MongoDB is to sping up a MongoDB container by executing:
+Python Eve (by default) uses MongoDB as a database. The easiest way for quick development with MongoDB is to spin up a MongoDB container by executing:
 
 ```bash
 docker run --name mongo_eve -p 27017:27017 -d mongo
@@ -18,7 +18,7 @@ docker run --name mongo_eve -p 27017:27017 -d mongo
 ```bash
 pip install -r requirements.txt
 ```
-    
+
  You should install Python Eve yourself (not included in requirements)
 ```bash
 pip install eve
@@ -26,7 +26,7 @@ pip install eve
 
 ## Example Usage
 
-Create a json file, `sample.json`. 
+Create a json file, `sample.json`.
 
 ```javascript
 {
