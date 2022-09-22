@@ -3,30 +3,33 @@
 ![last_commit](https://img.shields.io/github/last-commit/DavidZisky/evegenie)
 ![](https://github.com/DavidZisky/evegenie/workflows/evegenie_build/badge.svg)
 
-Evegenie is a tool for making [Eve](http://python-eve.org) schema generation easier. By providing JSON file with data and executing single command it can generate whole settings.py file for your Python Eve application. Originally developed by [@drud](https://github.com/drud)
+Evegenie is a tool for blazing fast REST API creation. By providing JSON file with data and executing single command it can generate whole settings.py file for your Python [Eve](http://python-eve.org)-based REST API application.
+
+Originally developed by [@drud](https://github.com/drud)
 
 Latest Eve version tested: 2.0
+
+## Requirements
 
 Python Eve (by default) uses MongoDB as a database. The easiest way for quick development with MongoDB is to spin up a MongoDB container by executing:
 
 ```bash
 docker run --name mongo_eve -p 27017:27017 -d mongo
 ```
-
-## Requirements
+Then install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
- You should install Python Eve yourself (not included in requirements)
+Then install Python Eve yourself (not included in requirements)
 ```bash
 pip install eve
 ```
 
 ## Example Usage
 
-Create a json file, `sample.json`.
+Create a json file, `sample.json`. Or you can use your own existing json file.
 
 ```javascript
 {
@@ -61,6 +64,9 @@ This will create a `sample.settings.py` file. Change it's name to settings.py an
 ```bash
 python3 run.py
 ```
+That's it! You have a fully functional REST API working now based on your data!
+
+## Under the hood
 
 Geneve created file with the following contents which is used by Python Eve as a settings file:
 
